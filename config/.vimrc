@@ -60,7 +60,7 @@ set fdl=10
 set expandtab
 set smarttab
 set shiftwidth=4
-set tabstop=4g
+set tabstop=4
 set softtabstop=4
 
 "启用备份

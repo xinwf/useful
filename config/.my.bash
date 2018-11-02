@@ -25,4 +25,4 @@ alias gst='git status'
 alias gdf='git diff'
 alias gfc='git fetch'
 
-alias kil='sudo /home/ubuntu/auto/apollo/third_party/killProcess.py'
+alias kil='sudo ${APOLLO_HOME}/third_party/killProcess.py'

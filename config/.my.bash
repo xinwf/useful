@@ -6,7 +6,7 @@ alias clr='clear'
 alias clnlog='rm -rf /home/ubuntu/auto/apollo/data/log/*'
 alias clncore='rm -rf /home/ubuntu/auto/apollo/data/core/*'
 alias clndocker='docker rmi $(docker images -f "dangling=true" -q)'
-alias stopdocker='docker stop $(docker ps -aq'
+alias stopdocker='docker stop $(docker ps -aq)'
 alias startdocker='bash /home/ubuntu/auto/apollo/docker/scripts/dev_start.sh -C -l -t base_apollo'
 alias intodocker='bash /home/ubuntu/auto/apollo/docker/scripts/dev_into.sh'
 

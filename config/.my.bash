@@ -24,5 +24,6 @@ alias gad='git add'
 alias gst='git status'
 alias gdf='git diff'
 alias gfc='git fetch'
+alias glg='git log'
 
 alias kil='sudo ${APOLLO_HOME}/third_party/killProcess.py'

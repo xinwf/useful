@@ -9,9 +9,9 @@ alias clr='clear'
 #apollo and docker relative
 alias clnlog='rm -rf ${APOLLO_HOME}/data/log/*'
 alias clncore='rm -rf ${APOLLO_HOME}/data/core/*'
-alias clndocker='docker rmi $(docker images -f "dangling=true" -q)'
+alias clndocker='docker volume rm $(docker volume ls -qf "dangling=true")'
 alias stopdocker='docker stop $(docker ps -aq)'
-alias startdocker='bash ${APOLLO_HOME}/docker/scripts/dev_start.sh -C -l -t base_apollo'
+alias startdocker='bash ${APOLLO_HOME}/docker/scripts/dev_start.sh -C -l -t apollo'
 alias intodocker='bash ${APOLLO_HOME}/docker/scripts/dev_into.sh'
 
 #git relative

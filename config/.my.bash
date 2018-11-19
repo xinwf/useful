@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 
 APOLLO_HOME='/home/ubuntu/auto/apollo'
 APOLLO3_HOME='/home/ubuntu/apollo/apollo3.0/apollo'

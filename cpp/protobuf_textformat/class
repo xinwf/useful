@@ -1,0 +1,17 @@
+name: "Communication 2004"
+member {
+  name: "flyan338"
+  age: 26
+  addr: "china"
+}
+member {
+  name: "likeliu"
+  age: 25
+  addr: "china"
+}
+member {
+  name: "gaoy"
+  age: 24
+  addr: "American"
+}
+

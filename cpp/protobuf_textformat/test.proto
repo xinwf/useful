@@ -1,0 +1,10 @@
+message student{
+    required string name = 1;   //姓名
+    required int32  age = 2;    //年龄
+    optional string addr = 3;
+}
+
+message classes{
+    required string name = 1;   //班级名称
+    repeated student member = 2;    //班级成员
+}

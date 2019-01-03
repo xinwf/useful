@@ -11,6 +11,7 @@ alias kil='${APOLLO_HOME}/third_party/killProcess.py'
 alias skil='sudo ${APOLLO_HOME}/third_party/killProcess.py'
 alias monnvi='watch -d -n 1 nvidia-smi'
 alias conz420='ssh ubuntu@192.168.0.99'
+alias psg='ps aux | grep '
 
 #docker relative
 alias clndocker='docker volume rm $(docker volume ls -qf "dangling=true")'

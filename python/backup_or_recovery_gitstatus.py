@@ -169,6 +169,9 @@ camera_projection.cc \n \
     elif sys.argv[1] == '-b':
         print("Backup modified and added files ...")
         backup(sys.argv[2])
+    else:
+        print(usage)
+        exit()
 
 
 if __name__ == '__main__':

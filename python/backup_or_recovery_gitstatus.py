@@ -4,7 +4,7 @@ import re
 import sys
 import codecs
 
-git_diff = 'git_diff'
+git_status = 'git_status'
 
 
 def backup(dest_dir):
@@ -15,7 +15,7 @@ def backup(dest_dir):
     f = codecs.open(dest_dir + '/backup_dir', 'w', encoding='utf-8')
     f.write(current_dir)
     f.close()
-    f = codecs.open(git_diff, 'r', encoding='utf-8')
+    f = codecs.open(git_status, 'r', encoding='utf-8')
     lines = f.readlines()
     f.close()
     # fn_re = re.compile('.*/')
@@ -48,7 +48,7 @@ def backup(dest_dir):
             fn = line.replace(" ", '').replace("\n", '')
             # print(fn)
             if os.path.exists(fn):
-                if fn in sys.argv[0] or fn == git_diff:
+                if fn in sys.argv[0] or fn == git_status:
                     continue
                 if not print_added:
                     print("\nadded files: ")
@@ -58,7 +58,7 @@ def backup(dest_dir):
                 count_added = count_added + 1
         else:
             pass
-    os.system('cp %s %s/' % (git_diff, dest_dir))
+    os.system('cp %s %s/' % (git_status, dest_dir))
     print("\nBackup %d files successfully. %d modified, %d added.\
         " % (count_modified + count_added, count_modified, count_added))
 
@@ -68,12 +68,12 @@ def recovery(from_dir):
         from_dir = from_dir[:-1]
 
     if os.path.exists(from_dir + '/backup_dir') \
-            and os.path.exists(from_dir + '/' + git_diff):
+            and os.path.exists(from_dir + '/' + git_status):
         f = codecs.open(from_dir + '/backup_dir', 'r', encoding='utf-8')
         lines = f.readlines()
         f.close()
         backup_dir = lines[0]
-        f = codecs.open(from_dir + '/' + git_diff)
+        f = codecs.open(from_dir + '/' + git_status)
         lines = f.readlines()
         f.close()
         fn_re = re.compile('.*/')
@@ -105,7 +105,7 @@ def recovery(from_dir):
             elif recovery_added:
                 fp = line.replace(" ", '').replace("\n", '')
                 fn = fn_re.sub('', fp)
-                if fn in sys.argv[0] or fn == git_diff:
+                if fn in sys.argv[0] or fn == git_status:
                     continue
                 dst_fp = backup_dir + "/" + fp.replace(fn, '')
                 if not print_added:
@@ -133,8 +133,8 @@ def main():
     -r: recovery from from_dir \n\n\
     Note: dest_dir should be consistent with from_dir in one \
 time operation of backup and recovery, read from file with the name \
-git_diff. \n\n\
-Input file like this(Copy from git diff):\n\n\
+git_status. \n\n\
+Input file like this(Copy from the result of the command git status):\n\n\
     Changes not staged for commit: \n \
       (use "git add <file>..." to update what will be committed) \n \
       (use "git checkout -- <file>..." to discard changes in working \

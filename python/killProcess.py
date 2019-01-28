@@ -2,6 +2,8 @@
 #-*-encoding:utf-8-*-
 #usage: ./scriptprogram processname
 import os,sys
+if len(sys.argv) == 1:
+    exit(0)
 processLine = os.popen("ps aux | grep %s" % sys.argv[1])
 line = processLine.readline()
 

@@ -1,14 +1,14 @@
 #!/bin/bash
 
 APOLLO_HOME='/home/ubuntu/apolloauto/auto/apollo'
-APOLLO3_HOME='/home/ubuntu/apolloauto/apollo/apollo3.0/apollo3'
+APOLLO3_HOME='/home/ubuntu/apolloauto/apollo3.0/apollo3'
 APOLLOM_HOME='/home/ubuntu/apolloauto/apollo/apollomaster/apollo-master'
 
 #general
 alias cln='printf "\033c"'
 alias clr='clear'
-alias kil='${APOLLO_HOME}/third_party/killProcess.py'
-alias skil='sudo ${APOLLO_HOME}/third_party/killProcess.py'
+alias kil='${HOME}/Public/xwf_github/useful/python/killProcess.py'
+alias skil='sudo ${HOME}/Public/xwf_github/useful/python/killProcess.py'
 alias monnvi='watch -d -n 1 nvidia-smi'
 alias conz420='ssh ubuntu@192.168.0.99'
 alias psg='ps aux | grep '
@@ -16,6 +16,7 @@ alias psg='ps aux | grep '
 #docker relative
 alias clndocker='docker volume rm $(docker volume ls -qf "dangling=true")'
 alias stopdocker='docker stop $(docker ps -aq)'
+alias start_ismart_website='docker run --name ismart-website -p 8080:8080 -v /wwwroot:/usr/share/nginx/html:ro -d nginx'
 
 
 #apollo relative

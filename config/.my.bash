@@ -42,6 +42,7 @@ alias intodockerm='bash ${APOLLOM_HOME}/docker/scripts/dev_into.sh'
 
 #git relative
 alias gcl='git clone'
+alias gcb='git clone -b'
 alias gbr='git branch'
 alias gcm='git commit -m'
 alias gck='git checkout'

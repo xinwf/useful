@@ -41,6 +41,7 @@ alias startdockerm='bash ${APOLLOM_HOME}/docker/scripts/dev_start_per.sh -C -l -
 alias intodockerm='bash ${APOLLOM_HOME}/docker/scripts/dev_into.sh'
 
 #git relative
+alias gcl='git clone'
 alias gbr='git branch'
 alias gcm='git commit -m'
 alias gck='git checkout'

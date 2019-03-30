@@ -5,5 +5,6 @@ do
     if [ -d $cur_path"/"$dir ]
     then 
 	mv $cur_path"/"$dir"/"* $cur_path
+	rmdir $cur_path"/"$dir
     fi
 done

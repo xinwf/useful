@@ -1,21 +1,23 @@
 #!/bin/bash
 
 APOLLO_HOME='/home/ubuntu/apolloauto/auto/apollo'
-APOLLO3_HOME='/home/ubuntu/apolloauto/apollo/apollo3.0/apollo3'
+APOLLO3_HOME='/home/ubuntu/apolloauto/apollo3.0/apollo3'
 APOLLOM_HOME='/home/ubuntu/apolloauto/apollo/apollomaster/apollo-master'
 
 #general
 alias cln='printf "\033c"'
 alias clr='clear'
-alias kil='${APOLLO_HOME}/third_party/killProcess.py'
-alias skil='sudo ${APOLLO_HOME}/third_party/killProcess.py'
+alias kil='${HOME}/Public/xwf_github/useful/python/killProcess.py'
+alias skil='sudo ${HOME}/Public/xwf_github/useful/python/killProcess.py'
 alias monnvi='watch -d -n 1 nvidia-smi'
 alias conz420='ssh ubuntu@192.168.0.99'
 alias psg='ps aux | grep '
+alias getOneDir='python ${HOME}/Public/xwf_github/useful/getOneDirV2/getOneDir.py'
 
 #docker relative
 alias clndocker='docker volume rm $(docker volume ls -qf "dangling=true")'
 alias stopdocker='docker stop $(docker ps -aq)'
+alias start_ismart_website='docker run --name ismart-website -p 8080:8080 -v /wwwroot:/usr/share/nginx/html:ro -d nginx'
 
 
 #apollo relative
@@ -39,6 +41,8 @@ alias startdockerm='bash ${APOLLOM_HOME}/docker/scripts/dev_start_per.sh -C -l -
 alias intodockerm='bash ${APOLLOM_HOME}/docker/scripts/dev_into.sh'
 
 #git relative
+alias gcl='git clone'
+alias gcb='git clone -b'
 alias gbr='git branch'
 alias gcm='git commit -m'
 alias gck='git checkout'
@@ -50,3 +54,6 @@ alias gdf='git diff'
 alias gfc='git fetch'
 alias glg='git log'
 alias grm='git rm'
+alias grs='git reset'
+alias gsh='git show'
+alias gtg='git tag'

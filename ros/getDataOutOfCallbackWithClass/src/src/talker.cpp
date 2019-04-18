@@ -93,7 +93,7 @@ int main(int argc, char **argv)
    */
 // %Tag(ROS_OK)%
   int count = 0;
-  while (ros::ok() and count <=10)
+  while (ros::ok() and count <=5)
   {
 // %EndTag(ROS_OK)%
     /**

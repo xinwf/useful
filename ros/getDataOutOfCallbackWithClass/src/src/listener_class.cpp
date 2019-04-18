@@ -27,7 +27,6 @@
 
 #include <ros/ros.h>
 #include <std_msgs/String.h>
-
 #include <sstream>
 
 /**
@@ -39,9 +38,9 @@ class Listener
 {
 public:
   std::string copy_data = "init init init";
+  int count = 0;
 public:
   void callback(const std_msgs::String::ConstPtr& msg);
-  // void print_data(const std::string & copy_data){ROS_INFO("Copy data is %s", copy_data);}
   void print_data2(){std::cout << "Copy data is :" << copy_data << "\n";}
 };
 // %EndTag(CLASS_WITH_DECLARATION)%
@@ -53,11 +52,8 @@ void Listener::callback(const std_msgs::String::ConstPtr& msg)
   ss << msg->data.c_str();
   ss >> copy_data;
   std::cout <<"copy_data is: " << copy_data <<"\n";
-  // ss << msg->data.c_str();
-  // ss >> copy_data;
-  // std::cout <<"copy_data is: " << copy_data <<"\n";
-  // print_data(copy_data);
   print_data2();
+  ++count;
 }
 
 int main(int argc, char **argv)
@@ -68,10 +64,13 @@ int main(int argc, char **argv)
 // %Tag(SUBSCRIBER)%
   Listener listener;
   ros::Subscriber sub = n.subscribe("chatter", 1000, &Listener::callback, &listener);
-  // listener.print_data();
+  ros::Rate loop_rate(10);
 // %EndTag(SUBSCRIBER)%
-
-  ros::spin();
-
+  while(ros::ok() and listener.count <=3){
+    ros::spinOnce();
+    loop_rate.sleep();
+  }
+  std::cout << "After spin: \n";
+  listener.print_data2();
   return 0;
 }

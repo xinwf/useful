@@ -1,3 +1,4 @@
 *.pyc
+*.vscode
 files/IBFS-master
 files/ibfs-patched

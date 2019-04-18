@@ -57,3 +57,6 @@ alias grm='git rm'
 alias grs='git reset'
 alias gsh='git show'
 alias gtg='git tag'
+
+#ros relative
+export ROS_MASTER_URI=http://localhost:11311/

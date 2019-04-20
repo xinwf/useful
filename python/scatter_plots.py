@@ -13,6 +13,8 @@ f.close()
 xValue = []
 yValue = []
 for line in data:
+    if len(line.replace("\n", ""))==0:
+        continue
     print(line.split(" "))
     xValue.append(line.split(" ")[0])
     yValue.append(line.split(" ")[1].replace("\n", ""))

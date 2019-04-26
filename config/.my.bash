@@ -58,11 +58,22 @@ alias grs='git reset'
 alias gsh='git show'
 alias gtg='git tag'
 
-#ros relative
+#ros and catkin_make relative
 export ROS_HOSTNAME=localhost
 export ROS_MASTER_URI=http://localhost:11311/
-alias cmone='catkin_make -DCATKIN_WHITELIST_PACKAGES=autopnp_scenario'
 alias pub='rostopic pub -1'
-export cmone='catkin_make  -DCATKIN_WHITELIST_PACKAGES="autopnp_scenario"'
 alias reser='roslaunch ist_room_exploration room_exploration_action_server.launch'
 alias recli='roslaunch ist_room_exploration room_exploration_client.launch'
+
+cmarg() {
+ pkglist=''
+ for key in "$@"
+ do
+    #pkglist=$key';'$pkglist
+    pkglist=$pkglist';'$key
+ done
+ #echo ${pkglist%;*}
+ #echo ${pkglist#*;}
+ #catkin_make -DCATKIN_WHITELIST_PACKAGES=${pkglist%;*}
+ catkin_make -DCATKIN_WHITELIST_PACKAGES=${pkglist#*;}
+}

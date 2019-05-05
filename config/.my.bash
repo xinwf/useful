@@ -64,6 +64,8 @@ export ROS_MASTER_URI=http://localhost:11311/
 alias pub='rostopic pub -1'
 alias reser='roslaunch ist_room_exploration room_exploration_action_server.launch'
 alias recli='roslaunch ist_room_exploration room_exploration_client.launch'
+alias cmii='catkin_make_isolated --install'
+alias cmi='catkin_make install'
 
 cmarg() {
  pkglist=''

@@ -13,3 +13,4 @@ do
     # rmdir $cur_path"/"$dir
     fi
 done
+echo "Solve ${i} invoices"

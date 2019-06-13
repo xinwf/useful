@@ -3,6 +3,10 @@
 import sys
 import matplotlib.pyplot as plt
 
+if len(sys.argv) == 1:
+    print("%s datafile" % sys.argv[0])
+    sys.exit(0)
+
 f = open(sys.argv[1], "r")
 data = f.readlines()
 f.close()

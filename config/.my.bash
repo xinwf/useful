@@ -75,6 +75,7 @@ alias cmii='catkin_make_isolated --install'
 alias cmi='catkin_make install'
 alias cm='catkin_make'
 
+# catkin_make with specific packages
 cmarg() {
  pkglist=''
  for key in "$@"
@@ -86,4 +87,15 @@ cmarg() {
  #echo ${pkglist#*;}
  #catkin_make -DCATKIN_WHITELIST_PACKAGES=${pkglist%;*}
  catkin_make -DCATKIN_WHITELIST_PACKAGES=${pkglist#*;}
+}
+
+# delete files except specific files
+rmfe() {
+ whitelist=''
+ for fn in "$@"
+ do
+    whitelist=$whitelist'|'$fn
+ done
+ #echo ${whitelist#*|}
+ rm !(${whitelist#*|})
 }

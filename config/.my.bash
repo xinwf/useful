@@ -73,6 +73,7 @@ alias cmiifp='catkin_make_isolated --install --from-pkg'
 alias cmiip='catkin_make_isolated --install --pkg'
 alias cmii='catkin_make_isolated --install'
 alias cmi='catkin_make install'
+alias cmopwd='catkin_make --only-pkg-with-deps'
 alias cm='catkin_make'
 
 # catkin_make with specific packages

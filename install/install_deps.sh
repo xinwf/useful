@@ -51,6 +51,7 @@ install_lua(){
         cd ${HOME}/tmp
         curl -R -O http://www.lua.org/ftp/lua-5.3.5.tar.gz
         tar zxf lua-5.3.5.tar.gz
+        sed -i 's/MYCFLAGS=/MYCFLAGS=-fPIC/g' $(cd "$(dirname "$0")";pwd)/lua-5.3.5/src/Makefile
         cd lua-5.3.5 && make linux -j4 && sudo make install
         # cd -
     else

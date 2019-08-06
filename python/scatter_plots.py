@@ -2,11 +2,14 @@
 # -*- coding: utf-8 -*-
 import matplotlib.pyplot as plt
 import numpy as np
+import sys
 from matplotlib.font_manager import FontProperties 
 
-#xValue = list(range(0, 101))
-#yValue = [x * np.random.rand() for x in xValue]
-f = open("polygon_centers_coor.txt", "r")
+if len(sys.argv) == 1:
+    print("%s datafile" % sys.argv[0])
+    sys.exit(0)
+
+f = open(sys.argv[1], "r")
 data = f.readlines()
 f.close()
 
@@ -15,7 +18,7 @@ yValue = []
 for line in data:
     if len(line.replace("\n", ""))==0:
         continue
-    print(line.split(" "))
+    # print(line.split(" "))
     xValue.append(line.split(" ")[0])
     yValue.append(line.split(" ")[1].replace("\n", ""))
 

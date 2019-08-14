@@ -4,14 +4,14 @@
 # glog deps : autoconf automake libtool
 # lua 5.3.5 : libreadline-dev
 install_basic(){
-    sudo apt install -y curl git \
-         autoconf automake libtool \
-         libreadline-dev \
-         libsuitesparse-dev
+    echo "Install basic dev deps ..."
+    sudo apt install -y autoconf automake libtool \
+         libreadline-dev libsuitesparse-dev
     mkdir ${HOME}/tmp
 }
 
 add_ros_source(){
+    echo "Add ros source ..."
     if [ ! -f "/etc/apt/sources.list.d/ros-latest.list" ]; then
         sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
         sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
@@ -22,8 +22,9 @@ add_ros_source(){
 }
 
 install_glog(){
+    echo "Install glog ..."
     if [ ! -d "/usr/local/include/glog" ]; then
-        cd ${HOME}/tmp
+        cd /tmp
         git clone https://github.com/google/glog.git
         cd glog
         bash autogen.sh && ./configure && make -j4 && sudo make install
@@ -34,9 +35,10 @@ install_glog(){
 }
 
 install_gflag(){
+    echo "Install gflag ..."
     if [ ! -f "/usr/local/include/gflags/gflags.h" ]; then
         # cur_dir=$(cd "$(dirname "$0")";pwd)
-        cd ${HOME}/tmp
+        cd /tmp
         git clone https://github.com/gflags/gflags.git
         cd gflags
         mkdir build && cd build && cmake .. && make -j4 && sudo make install
@@ -47,8 +49,9 @@ install_gflag(){
 }
 
 install_lua(){
+    echo "Install lua ..."
     if [ ! -f "/usr/local/include/lua.h" ]; then
-        cd ${HOME}/tmp
+        cd /tmp
         curl -R -O http://www.lua.org/ftp/lua-5.3.5.tar.gz
         tar zxf lua-5.3.5.tar.gz
         sed -i 's/MYCFLAGS=/MYCFLAGS=-fPIC/g' $(cd "$(dirname "$0")";pwd)/lua-5.3.5/src/Makefile
@@ -60,9 +63,10 @@ install_lua(){
 }
 
 install_protobuf3_4_1(){
+    echo "Install protobuf3_4_1 ..."
     if [ ! -d "/usr/local/include/google/protobuf" ]; then
         # cur_dir=$(cd "$(dirname "$0")";pwd)
-        cd ${HOME}/tmp
+        cd /tmp
 
         VERSION="3.4.1"
 
@@ -102,15 +106,24 @@ install_ros_deps(){
     ros-kinetic-move-base-msgs \
     ros-kinetic-kobuki-msgs \
     ros-kinetic-cob-map-accessibility-analysis \
-    coinor-libcoinutils-dev ros-kinetic-libdlib \
+    coinor-libcoinutils-dev ros-kinetic-libdlib ros-kinetic-move-base-msgs\
     ros-kinetic-opengm coinor-libcbc-dev coinor-libcgl-dev \
-    coinor-libclp-dev coinor-libosi-dev coinor-libcoinutils-dev \
+    coinor-libclp-dev coinor-libosi-dev coinor-libcoinutils-dev ros-kinetic-libconcorde-tsp-solver\
     ros-kinetic-bfl \
     ros-kinetic-teleop-twist-joy \
     ros-kinetic-costmap-converter ros-kinetic-libg2o
 }
 
+install_re_deps(){
+    echo "Install room exploration deps ..."
+    sudo apt install -y ros-kinetic-cob-map-accessibility-analysis \
+    coinor-libcoinutils-dev ros-kinetic-libdlib ros-kinetic-move-base-msgs\
+    ros-kinetic-opengm coinor-libcbc-dev coinor-libcgl-dev \
+    coinor-libclp-dev coinor-libosi-dev coinor-libcoinutils-dev ros-kinetic-libconcorde-tsp-solver
+}
+
 set_ros_env(){
+    echo "Set ros environment ..."
     file=${HOME}/.bashrc
     checkStr="/opt/ros/kinetic/setup.bash"
     key="source"
@@ -131,16 +144,19 @@ set_ros_env(){
     if ! $added; then
         sh -c 'echo "source /opt/ros/kinetic/setup.bash" >> $HOME/.bashrc'
         echo "Add source statement to bashrc"
+    else
+        echo "source statement has been added to .bashrc"
     fi      
 }
 
 #glog lua protobuf needed by ist_slam
 
-# add_ros_source
-# install_basic
-# install_glog
+add_ros_source
+#install_basic
+install_glog
 install_gflag
-# install_lua
+install_lua
 # install_protobuf3_4_1
 # install_ros_deps
-# set_ros_env
+install_re_deps
+set_ros_env

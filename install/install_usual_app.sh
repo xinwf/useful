@@ -3,7 +3,7 @@
 #install basic tools and common apps
 sudo add-apt-repository ppa:gnome-terminator -y
 sudo apt-get update
-sudo apt install -y terminator curl git meld sshpass openssh-server shutter screen
+sudo apt install -y terminator tmux curl git meld sshpass openssh-server shutter screen
 
 #install full vim
 sudo apt remove -y vim-common vim-tiny

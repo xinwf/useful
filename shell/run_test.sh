@@ -11,12 +11,23 @@ source /root/re/setup.bash
 
 for i in $(seq 1 $1)
 do
-    roslaunch ipa_room_exploration room_exploration_client.launch customized_area:=true reuse_click_point:=true \
-                click_point:="280,630 260,1055 320,1060 345,636" goal_eps:=1.0 path_eps:=20 execute_path:=true test_time:=$i
+	roslaunch ipa_room_exploration room_exploration_client.launch customized_area:=true reuse_click_point:=true \
+	            click_point:="280,630 260,1055 320,1060 345,636" goal_eps:=1.0 path_eps:=20 execute_path:=true test_time:=$i
     # echo $start_client
     while [[ ! -e $HOME/$i ]]
     do
-        # echo "sleep"
+		if [ $i -eq 1 ]; then
+        	echo $i"st test"
+		elif [ $i -eq 2 ]; then
+			echo $i"nd test"
+		else
+			echo $i"th test"
+		fi
         sleep 5s
     done
+done
+
+for i in $(seq 1 $1)
+do
+	rm $i
 done

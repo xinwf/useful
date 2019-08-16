@@ -31,4 +31,5 @@ wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 sudo dpkg -i google-chrome-stable_current_amd64.deb
 rm google-chrome-stable_current_amd64.deb
 
-
+#clone useful
+mkdir $HOME/Public/xwf_github && cd $HOME/Public/xwf_github && git clone https://github.com/xinwf/useful.git

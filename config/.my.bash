@@ -33,6 +33,8 @@ alias gsh='git show'
 alias gtg='git tag'
 
 #ros and catkin_make relative
+# CMAKE_OPTION can't be used due to it's a system ENV variable.
+CMAKE_ARGS=' --cmake-args -DCMAKE_CXX_FLAGS="-std=c++11 ${CMAKE_CXX_FLAGS}"'
 export ROS_HOSTNAME=localhost
 export ROS_MASTER_URI=http://localhost:11311/
 alias pub='rostopic pub -1'
@@ -42,9 +44,37 @@ alias cmiiopwd='catkin_make_isolated --install --only-pkg-with-deps'
 alias cmiifp='catkin_make_isolated --install --from-pkg'
 alias cmiip='catkin_make_isolated --install --pkg'
 alias cmii='catkin_make_isolated --install'
-alias cmi='catkin_make install'
-alias cmopwd='catkin_make --only-pkg-with-deps'
-alias cm='catkin_make'
+alias cmi='catkin_make install'$CMAKE_ARGS
+alias cmopwd='catkin_make --only-pkg-with-deps'$CMAKE_ARGS
+alias cm='catkin_make'$CMAKE_ARGS
+
+# catkin_make with specific packages
+cmarg() {
+ pkglist=''
+ useInstall=false
+ for key in "$@"
+ do
+	# echo $key
+    #pkglist=$key';'$pkglist
+	if [ $key == 'i' ]; then
+		useInstall=true
+	else
+    	pkglist=$pkglist';'$key
+	fi
+ done
+ #echo ${pkglist%;*}
+ #echo ${pkglist#*;}
+ #catkin_make -DCATKIN_WHITELIST_PACKAGES=${pkglist%;*}
+ if $useInstall; then
+ 	catkin_make install $CMAKE_ARGS -DCATKIN_WHITELIST_PACKAGES=${pkglist#*;}
+ else
+ 	catkin_make $CMAKE_ARGS -DCATKIN_WHITELIST_PACKAGES=${pkglist#*;}
+ fi
+}
+
+cmiarg() {
+	cmarg 'i' $@
+}
 
 #tmux relative
 alias tma='tmux a'
@@ -65,20 +95,8 @@ alias sshbotr='sshpass -proot ssh root@192.168.8.88'
 alias sshpc='sshpass -pmater ssh mate@192.168.3.40'
 alias scpbot='sshpass -ptic123 scp'
 alias scppc='sshpass -pmater scp'
+alias simenv='roslaunch navigation_stage move_base_amcl_5cm.launch'
 
-# catkin_make with specific packages
-cmarg() {
- pkglist=''
- for key in "$@"
- do
-    #pkglist=$key';'$pkglist
-    pkglist=$pkglist';'$key
- done
- #echo ${pkglist%;*}
- #echo ${pkglist#*;}
- #catkin_make -DCATKIN_WHITELIST_PACKAGES=${pkglist%;*}
- catkin_make -DCATKIN_WHITELIST_PACKAGES=${pkglist#*;}
-}
 
 # delete files except specific files
 rmfe() {

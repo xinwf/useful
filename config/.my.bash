@@ -34,7 +34,7 @@ alias gtg='git tag'
 
 #ros and catkin_make relative
 # CMAKE_OPTION can't be used due to it's a system ENV variable.
-CMAKE_ARGS=' --cmake-args -DCMAKE_CXX_FLAGS="-std=c++11 ${CMAKE_CXX_FLAGS}"'
+CMAKE_ARGS=' --cmake-args -DCMAKE_CXX_FLAGS="-std=c++11"'
 export ROS_HOSTNAME=localhost
 export ROS_MASTER_URI=http://localhost:11311/
 alias pub='rostopic pub -1'
@@ -51,13 +51,19 @@ alias cm='catkin_make'$CMAKE_ARGS
 # catkin_make with specific packages
 cmarg() {
  pkglist=''
- useInstall=false
+ COMPILE_COMMAND="catkin_make "
+ auto=false
+#  POSTFIX=${CMAKE_ARGS}
  for key in "$@"
  do
 	# echo $key
     #pkglist=$key';'$pkglist
 	if [ $key == 'i' ]; then
-		useInstall=true
+		COMPILE_COMMAND=${COMPILE_COMMAND}' install'
+		# POSTFIX='install '$POSTFIX
+	elif [ $key == 'opwd' ]; then
+		COMPILE_COMMAND=${COMPILE_COMMAND}' --only-pkg-with-deps'
+		auto=true
 	else
     	pkglist=$pkglist';'$key
 	fi
@@ -65,15 +71,41 @@ cmarg() {
  #echo ${pkglist%;*}
  #echo ${pkglist#*;}
  #catkin_make -DCATKIN_WHITELIST_PACKAGES=${pkglist%;*}
- if $useInstall; then
- 	catkin_make install $CMAKE_ARGS -DCATKIN_WHITELIST_PACKAGES=${pkglist#*;}
- else
- 	catkin_make $CMAKE_ARGS -DCATKIN_WHITELIST_PACKAGES=${pkglist#*;}
- fi
+ #  if $useInstall; then
+ #  	catkin_make install $CMAKE_ARGS -DCATKIN_WHITELIST_PACKAGES=${pkglist#*;}
+ #  else
+ #  	catkin_make $CMAKE_ARGS -DCATKIN_WHITELIST_PACKAGES=${pkglist#*;}
+ #  fi
+#  echo ${COMPILE_COMMAND}' '-DCATKIN_WHITELIST_PACKAGES=${pkglist#*;}' $CMAKE_ARGS'
+# echo ${COMPILE_COMMAND}' '${pkglist#*;} $CMAKE_ARGS
+#   echo ${COMPILE_COMMAND}' '${pkglist#*;} $POSTFIX
+  if $auto; then
+     ${COMPILE_COMMAND} ${pkglist#*;} ${CMAKE_ARGS}
+  else
+  	 ${COMPILE_COMMAND} -DCATKIN_WHITELIST_PACKAGES=${pkglist#*;} ${CMAKE_ARGS}
+  fi
+ # ${COMPILE_COMMAND} $CMAKE_ARGS -DCATKIN_WHITELIST_PACKAGES=${pkglist#*;}
 }
 
 cmiarg() {
 	cmarg 'i' $@
+}
+
+cmwdep(){
+	# opwd: --only-pkg-with-deps
+	cmarg 'opwd' $@
+}
+
+cmiwdep(){
+	cmarg 'i' 'opwd' $@
+}
+
+cmdir(){
+
+}
+
+cmidir(){
+	apollomaster
 }
 
 #tmux relative

@@ -128,6 +128,7 @@ alias sshpc='sshpass -pmater ssh mate@192.168.3.40'
 alias scpbot='sshpass -ptic123 scp'
 alias scppc='sshpass -pmater scp'
 alias simenv='roslaunch navigation_stage move_base_amcl_5cm.launch'
+alias flushssh='ssh-keygen -f "${HOME}/.ssh/known_hosts" -R 192.168.8.88'
 
 
 # delete files except specific files

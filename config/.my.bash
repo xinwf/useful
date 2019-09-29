@@ -100,13 +100,13 @@ cmiwdep(){
 	cmarg 'i' 'opwd' $@
 }
 
-cmdir(){
+# cmdir(){
 
-}
+# }
 
-cmidir(){
-	apollomaster
-}
+# cmidir(){
+# 	apollomaster
+# }
 
 #tmux relative
 alias tma='tmux a'

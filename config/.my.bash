@@ -13,6 +13,7 @@ alias lsf='ls -l |grep "^-"'
 alias lsd='ls -l |grep "^d"'
 alias wcf='ls -l |grep "^-" | wc -l'
 alias wcd='ls -l |grep "^d" | wc -l'
+alias toroot='bash ${HOME}/.toroot.bash'
 
 #git relative
 alias gcl='git clone'
@@ -35,6 +36,7 @@ alias gtg='git tag'
 #ros and catkin_make relative
 # CMAKE_OPTION can't be used due to it's a system ENV variable.
 CMAKE_ARGS=' --cmake-args -DCMAKE_CXX_FLAGS="-std=c++11"'
+CATKIN_COMPILE_COMMAND="catkin_make "
 export ROS_HOSTNAME=localhost
 export ROS_MASTER_URI=http://localhost:11311/
 alias pub='rostopic pub -1'
@@ -51,7 +53,6 @@ alias cm='catkin_make'$CMAKE_ARGS
 # catkin_make with specific packages
 cmarg() {
  pkglist=''
- COMPILE_COMMAND="catkin_make "
  auto=false
 #  POSTFIX=${CMAKE_ARGS}
  for key in "$@"
@@ -59,10 +60,10 @@ cmarg() {
 	# echo $key
     #pkglist=$key';'$pkglist
 	if [ $key == 'i' ]; then
-		COMPILE_COMMAND=${COMPILE_COMMAND}' install'
+		CATKIN_COMPILE_COMMAND=${CATKIN_COMPILE_COMMAND}' install'
 		# POSTFIX='install '$POSTFIX
 	elif [ $key == 'opwd' ]; then
-		COMPILE_COMMAND=${COMPILE_COMMAND}' --only-pkg-with-deps'
+		CATKIN_COMPILE_COMMAND=${CATKIN_COMPILE_COMMAND}' --only-pkg-with-deps'
 		auto=true
 	else
     	pkglist=$pkglist';'$key
@@ -76,15 +77,15 @@ cmarg() {
  #  else
  #  	catkin_make $CMAKE_ARGS -DCATKIN_WHITELIST_PACKAGES=${pkglist#*;}
  #  fi
-#  echo ${COMPILE_COMMAND}' '-DCATKIN_WHITELIST_PACKAGES=${pkglist#*;}' $CMAKE_ARGS'
-# echo ${COMPILE_COMMAND}' '${pkglist#*;} $CMAKE_ARGS
-#   echo ${COMPILE_COMMAND}' '${pkglist#*;} $POSTFIX
+#  echo ${CATKIN_COMPILE_COMMAND}' '-DCATKIN_WHITELIST_PACKAGES=${pkglist#*;}' $CMAKE_ARGS'
+# echo ${CATKIN_COMPILE_COMMAND}' '${pkglist#*;} $CMAKE_ARGS
+#   echo ${CATKIN_COMPILE_COMMAND}' '${pkglist#*;} $POSTFIX
   if $auto; then
-     ${COMPILE_COMMAND} ${pkglist#*;} ${CMAKE_ARGS}
+     ${CATKIN_COMPILE_COMMAND} ${pkglist#*;} ${CMAKE_ARGS}
   else
-  	 ${COMPILE_COMMAND} -DCATKIN_WHITELIST_PACKAGES=${pkglist#*;} ${CMAKE_ARGS}
+  	 ${CATKIN_COMPILE_COMMAND} -DCATKIN_WHITELIST_PACKAGES=${pkglist#*;} ${CMAKE_ARGS}
   fi
- # ${COMPILE_COMMAND} $CMAKE_ARGS -DCATKIN_WHITELIST_PACKAGES=${pkglist#*;}
+ # ${CATKIN_COMPILE_COMMAND} $CMAKE_ARGS -DCATKIN_WHITELIST_PACKAGES=${pkglist#*;}
 }
 
 cmiarg() {
@@ -100,13 +101,26 @@ cmiwdep(){
 	cmarg 'i' 'opwd' $@
 }
 
-# cmdir(){
+cmdir(){
+	pkglist=''
+	for dirName in $(ls $1)
+	do
+		# echo $dirName
+		if [[ -d $1'/'$dirName ]]; then
+			pkglist=$pkglist';'$dirName
+		fi
+	done
+	# echo ${pkglist#*;}
+	if [ $# == 1 ]; then
+		${CATKIN_COMPILE_COMMAND} -DCATKIN_WHITELIST_PACKAGES=${pkglist#*;} ${CMAKE_ARGS}
+	elif [[ $# == 2 && $2 == 'i' ]]; then
+		${CATKIN_COMPILE_COMMAND} install -DCATKIN_WHITELIST_PACKAGES=${pkglist#*;} ${CMAKE_ARGS}
+	fi
+}
 
-# }
-
-# cmidir(){
-# 	apollomaster
-# }
+cmidir(){
+	cmdir $1 'i'
+}
 
 #tmux relative
 alias tma='tmux a'

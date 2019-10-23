@@ -122,6 +122,24 @@ cmidir(){
 	cmdir $1 'i'
 }
 
+cmdir2(){
+	if [[ $# == 2 && $2 == 'i' ]]; then
+		CATKIN_COMPILE_COMMAND=${CATKIN_COMPILE_COMMAND}' install'
+	fi
+
+	for dirName in $(ls $1)
+	do
+		# echo $dirName
+		if [[ -d $1'/'$dirName ]]; then
+			${CATKIN_COMPILE_COMMAND} -DCATKIN_WHITELIST_PACKAGES=$dirName ${CMAKE_ARGS}
+		fi
+	done
+}
+
+cmidir2(){
+	cmdir2 $1 'i'
+}
+
 #tmux relative
 alias tma='tmux a'
 alias tmns='tmux new -s'

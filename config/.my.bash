@@ -47,7 +47,7 @@ alias cmiifp='catkin_make_isolated --install --from-pkg'
 alias cmiip='catkin_make_isolated --install --pkg'
 alias cmii='catkin_make_isolated --install'
 alias cmi='catkin_make install'$CMAKE_ARGS
-alias cmopwd='catkin_make --only-pkg-with-deps'$CMAKE_ARGS
+alias cmopwd='catkin_make'$CMAKE_ARGS' --only-pkg-with-deps'
 alias cm='catkin_make'$CMAKE_ARGS
 
 # catkin_make with specific packages

@@ -15,9 +15,13 @@ def backup(dest_dir):
     f = codecs.open(dest_dir + '/backup_dir', 'w', encoding='utf-8')
     f.write(current_dir)
     f.close()
-    f = codecs.open(git_status, 'r', encoding='utf-8')
-    lines = f.readlines()
-    f.close()
+    lines = []
+    if os.path.exists(git_status):
+        f = codecs.open(git_status, 'r', encoding='utf-8')
+        lines = f.readlines()
+        f.close()
+    else:
+        lines = os.popen('git status').readlines()
     # fn_re = re.compile('.*/')
     added = False
     count_modified = 0
@@ -25,7 +29,9 @@ def backup(dest_dir):
     print_modified = False
     print_added = False
     for line in lines:
-        if len(line.replace(" ", '').replace("\n", '')) == 0:
+        # print(line.replace("\n", ''))
+        # continue
+        if len(line.replace(" ", '').replace("\n", '')) == 0 or sys.argv[0].split('/')[-1] in line:
             continue
         elif 'modified' in line:
             file_path = line.split(":")[1].replace(" ", '').replace("\n", '')
@@ -45,7 +51,7 @@ def backup(dest_dir):
             pass
         elif added:
             # print("backup added files ...")
-            fn = line.replace(" ", '').replace("\n", '')
+            fn = line.replace(" ", '').replace("\n", '').replace("\t", '')
             # print(fn)
             if os.path.exists(fn):
                 if fn in sys.argv[0] or fn == git_status:
@@ -53,12 +59,19 @@ def backup(dest_dir):
                 if not print_added:
                     print("\nadded files: ")
                     print_added = True
-                print('  cp %s %s/' % (fn, dest_dir))
-                os.system('cp %s/%s %s/' % (current_dir, fn, dest_dir))
+                print('  mv %s %s/' % (fn, dest_dir))
+                os.system('mv %s/%s %s/' % (current_dir, fn, dest_dir))
                 count_added = count_added + 1
         else:
             pass
-    os.system('cp %s %s/' % (git_status, dest_dir))
+    # exit(0)
+    if os.path.exists(git_status):
+        os.system('cp %s %s/' % (git_status, dest_dir))
+    else:
+        f = codecs.open(dest_dir+"/"+git_status, 'w', encoding='utf-8')
+        for line in lines:
+            f.write(line)
+        f.close()
     print("\nBackup %d files successfully. %d modified, %d added.\
         " % (count_modified + count_added, count_modified, count_added))
 
@@ -78,13 +91,16 @@ def recovery(from_dir):
         f.close()
         fn_re = re.compile('.*/')
         recovery_added = False
+        recovery_untracked = False
         recovery_modified = False
         count_modified = 0
         count_added = 0
         print_modified = False
         print_added = False
         for line in lines:
-            if len(line.replace(" ", '').replace("\n", '')) == 0:
+            # print(line)
+            # continue
+            if len(line.replace(" ", '').replace("\n", '')) == 0 or sys.argv[0].split('/')[-1] in line:
                 continue
             elif 'modified' in line:
                 fp = line.split(":")[1].replace(" ", '').replace("\n", '')
@@ -97,22 +113,34 @@ def recovery(from_dir):
                 os.system('cp %s %s' % (from_dir + "/" + fn, dst_fp))
                 count_modified = count_modified + 1
                 recovery_modified = True
-            elif 'what will be committed' in line and recovery_modified:
+            elif 'Untracked' in line:
+                recovery_untracked = True
+            elif 'what will be committed' in line and (recovery_modified or recovery_untracked):
                 recovery_added = True
-            elif 'no changes added to commit' in line:
+            elif 'no changes added to commit' in line or 'nothing added to commit' in line:
                 recovery_added = False
                 pass
             elif recovery_added:
-                fp = line.replace(" ", '').replace("\n", '')
+                fp = line.replace(" ", '').replace("\n", '').replace("\t", '')
+                # print(fp)
                 fn = fn_re.sub('', fp)
+                if len(fn) == 0 and fp[-1] == '/':
+                    fn = fp.split('/')[-2] + '/'
+                # print(fn)
                 if fn in sys.argv[0] or fn == git_status:
                     continue
-                dst_fp = backup_dir + "/" + fp.replace(fn, '')
+                if not recovery_untracked:
+                    dst_fp = backup_dir + "/" + fp.replace(fn, '')
+                else:
+                    # print(backup_dir)
+                    # print(fp)
+                    dst_fp = backup_dir + "/" + fp.replace(fn, '')
+                    # print(dst_fp)
                 if not print_added:
                     print("\nRecovery added files: ")
                     print_added = True
-                print('  cp %s %s' % (from_dir + "/" + fn, dst_fp))
-                os.system('cp %s %s' % (from_dir + "/" + fn, dst_fp))
+                print('  cp -r %s %s' % (from_dir + "/" + fn, dst_fp))
+                os.system('cp -r %s %s' % (from_dir + "/" + fn, dst_fp))
                 count_added = count_added + 1
             else:
                 pass
@@ -128,6 +156,7 @@ def recovery(from_dir):
 
 
 def main():
+    print(sys.argv[0])
     usage = 'Usage:  ./script -b/r dest_dir/from_dir\n \
     -b: backup to dest_dir  \n \
     -r: recovery from from_dir \n\n\

@@ -89,8 +89,16 @@ set_ros_env(){
     fi      
 }
 
+enable_ssh_server()
+{
+    sudo apt-get install -y openssh-server
+    sudo service sshd start
+}
+
 add_ros_source_and_base
 
 install_project_deps
 
 set_ros_env
+
+enable_ssh_server

@@ -17,7 +17,7 @@ install_basic_deps()
 {
     sudo apt-get install -y ros-kinetic-bfl # depends by robot_pose_ekf
     sudo apt-get install -y ros-kinetic-map-msgs # depends by costmap_2d
-    sudo apt-get install -y ros-kinetic-costmap-converter ros-kinetic-mbf-costmap-core ros-kinetic-mbf-msgs ros-kinetic-libg2o # depend by teb_local_planner
+    sudo apt-get install -y ros-kinetic-costmap-converter ros-kinetic-mbf-costmap-core ros-kinetic-mbf-msgs ros-kinetic-libg2o ros-kinetic-tf-conversions # depend by teb_local_planner
     sudo apt-get install -y ros-kinetic-rosbridge-suite 
     sudo apt-get install -y ros-kinetic-rosconsole
     sudo apt-get install -y ros-kinetic-serial

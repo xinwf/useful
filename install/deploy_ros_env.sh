@@ -15,29 +15,29 @@ add_ros_source_and_base()
 
 install_basic_deps()
 {
-    sudo apt-get install ros-kinetic-rosbridge-suite 
-    sudo apt-get install ros-kinetic-rosconsole
-    sudo apt-get install ros-kinetic-serial
-    sudo apt-get install ros-kinetic-gmapping 
-    sudo apt-get install ros-kinetic-laser-filters
-    sudo apt-get install ros-kinetic-tf2-sensor-msgs
-    sudo apt-get install ros-kinetic-ecl-threads # depends by yocs_velocity_smoother
-    sudo apt-get install libsdl1.2-dev libsdl-image1.2 # depends by map_server
+    sudo apt-get install -y ros-kinetic-rosbridge-suite 
+    sudo apt-get install -y ros-kinetic-rosconsole
+    sudo apt-get install -y ros-kinetic-serial
+    sudo apt-get install -y ros-kinetic-gmapping 
+    sudo apt-get install -y ros-kinetic-laser-filters
+    sudo apt-get install -y ros-kinetic-tf2-sensor-msgs
+    sudo apt-get install -y ros-kinetic-ecl-threads # depends by yocs_velocity_smoother
+    sudo apt-get install -y libsdl1.2-dev libsdl-image1.2 # depends by map_server
 }
 
 install_fuse_odom_deps()
 {
-    sudo apt-get install ros-kinetic-robot-localization
+    sudo apt-get install -y ros-kinetic-robot-localization
 }
 
 install_new_localization_deps()
 {
-    sudo apt-get install ros-kinetic-mrpt-localization
+    sudo apt-get install -y ros-kinetic-mrpt-localization
 }
 
 install_teaching_mode_deps()
 {
-    sudo apt-get install ros-kinetic-tf ros-kinetic-geometry-msgs ros-kinetic-dynamic-reconfigure ros-kinetic-nav-msgs ros-kinetic-pluginlib ros-kinetic-actionlib ros-kinetic-angles ros-kinetic-interactive-markers
+    sudo apt-get install -y ros-kinetic-tf ros-kinetic-geometry-msgs ros-kinetic-dynamic-reconfigure ros-kinetic-nav-msgs ros-kinetic-pluginlib ros-kinetic-actionlib ros-kinetic-angles ros-kinetic-interactive-markers
 }
 
 install_path_gen_deps()

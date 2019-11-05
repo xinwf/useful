@@ -30,6 +30,11 @@ install_fuse_odom_deps()
     sudo apt-get install ros-kinetic-robot-localization
 }
 
+install_new_localization_deps()
+{
+    sudo apt-get install ros-kinetic-mrpt-localization
+}
+
 install_teaching_mode_deps()
 {
     sudo apt-get install ros-kinetic-tf ros-kinetic-geometry-msgs ros-kinetic-dynamic-reconfigure ros-kinetic-nav-msgs ros-kinetic-pluginlib ros-kinetic-actionlib ros-kinetic-angles ros-kinetic-interactive-markers
@@ -49,6 +54,8 @@ install_project_deps()
     install_basic_deps
 
     install_fuse_odom_deps
+    
+    install_new_localization_deps
 
     install_teaching_mode_deps
 

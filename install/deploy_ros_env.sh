@@ -15,6 +15,8 @@ add_ros_source_and_base()
 
 install_basic_deps()
 {
+    sudo apt-get install -y ros-kinetic-bfl # depends by robot_pose_ekf
+    sudo apt-get install -y ros-kinetic-map-msgs # depends by costmap_2d
     sudo apt-get install -y ros-kinetic-rosbridge-suite 
     sudo apt-get install -y ros-kinetic-rosconsole
     sudo apt-get install -y ros-kinetic-serial
@@ -22,7 +24,7 @@ install_basic_deps()
     sudo apt-get install -y ros-kinetic-laser-filters
     sudo apt-get install -y ros-kinetic-tf2-sensor-msgs
     sudo apt-get install -y ros-kinetic-ecl-threads # depends by yocs_velocity_smoother
-    sudo apt-get install -y libsdl1.2-dev libsdl-image1.2 # depends by map_server
+    sudo apt-get install -y libbullet-dev libsdl1.2-dev libsdl-image1.2 libsdl-image1.2-dev # depends by map_server
 }
 
 install_fuse_odom_deps()

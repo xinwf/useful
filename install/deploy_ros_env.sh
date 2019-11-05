@@ -41,7 +41,7 @@ add_ros_source_and_base()
 
 install_basic_deps()
 {
-    sudo apt-get install -y python-rosnode rosbash rospack-tools
+    sudo apt-get install -y python-rosnode rosbash rospack-tools ros-kinetic-xacro ros-kinetic-joint-state-publisher ros-kinetic-dynamic-robot-state-publisher
     sudo apt-get install -y ros-kinetic-bfl # depends by robot_pose_ekf
     sudo apt-get install -y ros-kinetic-map-msgs # depends by costmap_2d
     sudo apt-get install -y ros-kinetic-costmap-converter ros-kinetic-mbf-costmap-core ros-kinetic-mbf-msgs ros-kinetic-libg2o ros-kinetic-tf-conversions # depend by teb_local_planner

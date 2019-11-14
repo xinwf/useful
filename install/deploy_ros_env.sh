@@ -2,8 +2,9 @@
 
 using_ali_source()
 {
-    sudo mv /etc/apt/sources.list /etc/apt/sources.list.old
-    sudo sh -c 'echo \
+    if [ ! -f "/etc/apt/sources.list.old" ]; then
+        sudo mv /etc/apt/sources.list /etc/apt/sources.list.old
+        sudo sh -c 'echo \
 "# deb cdrom:[Ubuntu 16.04 LTS _Xenial Xerus_ - Release amd64 (20160420.1)]/ xenial main restricted
 deb-src http://archive.ubuntu.com/ubuntu xenial main restricted #Added by software-properties
 deb http://mirrors.aliyun.com/ubuntu/ xenial main restricted
@@ -22,7 +23,8 @@ deb http://mirrors.aliyun.com/ubuntu/ xenial-security main restricted
 deb-src http://mirrors.aliyun.com/ubuntu/ xenial-security main restricted multiverse universe #Added by software-properties
 deb http://mirrors.aliyun.com/ubuntu/ xenial-security universe
 deb http://mirrors.aliyun.com/ubuntu/ xenial-security multiverse" > /etc/apt/sources.list'
-    sudo apt update
+        sudo apt update
+    fi
 }
 
 add_ros_source_and_base()
@@ -32,7 +34,8 @@ add_ros_source_and_base()
     if [ ! -f "/etc/apt/sources.list.d/ros-latest.list" ]; then
         if [ $using_ustc_source == true ]; then
             sudo sh -c 'echo "deb http://mirrors.ustc.edu.cn/ros/ubuntu/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
-            sudo apt-key adv --keyserver hkp://pool.sks-keyservers.net --recv-key 0xB01FA116
+            wget https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -O - | sudo apt-key add -
+            # sudo apt-key adv --keyserver hkp://pool.sks-keyservers.net --recv-key 0xB01FA116
         else
             sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
             sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654

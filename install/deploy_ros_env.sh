@@ -28,9 +28,15 @@ deb http://mirrors.aliyun.com/ubuntu/ xenial-security multiverse" > /etc/apt/sou
 add_ros_source_and_base()
 {
     echo "Add ros source ..."
+    using_ustc_source=$1
     if [ ! -f "/etc/apt/sources.list.d/ros-latest.list" ]; then
-        sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
-        sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
+        if [ $using_ustc_source == true ]; then
+            sudo sh -c 'echo "deb http://mirrors.ustc.edu.cn/ros/ubuntu/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+            sudo apt-key adv --keyserver hkp://pool.sks-keyservers.net --recv-key 0xB01FA116
+        else
+            sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+            sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
+        fi
         sudo apt update
     else
         echo "Ros source has been added."
@@ -127,7 +133,8 @@ enable_ssh_server()
 
 using_ali_source
 
-add_ros_source_and_base
+using_ustc_source=true
+add_ros_source_and_base $using_ustc_source
 
 install_project_deps
 

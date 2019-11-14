@@ -155,6 +155,7 @@ alias tm2r='tmux new-session -s "s1"\; split-window -v \; attach'
 export PC='mate@192.168.3.40' #tic_wifi1
 export BOT='tic@192.168.8.88'
 alias sshbot='sshpass -ptic123 ssh tic@192.168.8.88'
+alias sshser='sshpass -pgit ssh tic@192.168.8.234'
 alias sshbotr='sshpass -proot ssh root@192.168.8.88'
 alias sshpc='sshpass -pmater ssh mate@192.168.3.40'
 alias scpbot='sshpass -ptic123 scp'

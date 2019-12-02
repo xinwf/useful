@@ -13,7 +13,7 @@ alias lsf='ls -l |grep "^-"'
 alias lsd='ls -l |grep "^d"'
 alias wcf='ls -l |grep "^-" | wc -l'
 alias wcd='ls -l |grep "^d" | wc -l'
-alias toroot='bash ${HOME}/.toroot.bash'
+alias toroot="echo 'mater' | (sudo -S su root) > /dev/null 2>&1 && sudo -i || sudo -i"
 
 #git relative
 alias gcl='git clone'
@@ -162,6 +162,7 @@ alias scpbot='sshpass -ptic123 scp'
 alias scppc='sshpass -pmater scp'
 alias simenv='roslaunch navigation_stage move_base_amcl_5cm.launch'
 alias flushssh='ssh-keygen -f "${HOME}/.ssh/known_hosts" -R 192.168.8.88'
+alias ziptic='rm tic_robot-1.3.2.zip && zip -r tic_robot-1.3.2.zip tic_robot -x *.git* || zip -r tic_robot-1.3.2.zip tic_robot -x *.git*'
 
 
 # delete files except specific files

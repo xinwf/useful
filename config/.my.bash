@@ -153,10 +153,12 @@ alias tm2r='tmux new-session -s "s1"\; split-window -v \; attach'
 
 #tic relative
 export PC='mate@192.168.3.40' #tic_wifi1
-export BOT_IP='192.168.8.99'
+export BOT_IP='192.168.8.88'
 export BOT_USER='tic'
 export BOT=$BOT_USER@$BOT_IP
+export BOT99=$BOT_USER@'192.168.8.99'
 alias sshbot='sshpass -ptic123 ssh -o stricthostkeychecking=no '$BOT
+alias sshbot99='sshpass -ptic123 ssh -o stricthostkeychecking=no '$BOT99
 alias sshser='sshpass -pgit ssh tic@192.168.8.234'
 alias sshbotr='sshpass -proot ssh root@$BOT_IP'
 alias sshpc='sshpass -pmater ssh mate@192.168.3.40'
@@ -165,6 +167,7 @@ alias scppc='sshpass -pmater scp'
 alias simenv='roslaunch navigation_stage move_base_amcl_5cm.launch'
 alias flushssh='ssh-keygen -f "${HOME}/.ssh/known_hosts" -R '$BOT_IP
 alias ziptic='rm tic_robot-latest.zip && zip -r tic_robot-latest.zip tic_robot -x *.git* || zip -r tic_robot-latest.zip tic_robot -x *.git*'
+alias ziptic2='rm tic_robot-dev_test.zip && zip -r tic_robot-dev_test.zip ticrobot_devtest -x *.git* || zip -r tic_robot-dev_test.zip ticrobot_devtest -x *.git*'
 
 
 # delete files except specific files

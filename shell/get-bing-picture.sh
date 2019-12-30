@@ -5,6 +5,10 @@
 
 # @Modified by: Xin Wenfei
 # @E-Mail: xinwf18@gmail.com
+# @Note: Using crontab -e to set a timed task(This is a temporary method, it will lost after reboot, permanent method is
+#          edit /etc/crontab)
+# @Crontab usage description: https://blog.csdn.net/allenlinrui/article/details/7490206
+# @New version(Using api with js): https://github.com/Cool-Pan/dotfiles/blob/master/files/power-pkg/profile/_bing
 
 #
 # 获取必应每日的主页图片作为壁纸

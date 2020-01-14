@@ -115,11 +115,17 @@ cmdir(){
 		${CATKIN_COMPILE_COMMAND} -DCATKIN_WHITELIST_PACKAGES=${pkglist#*;} ${CMAKE_ARGS}
 	elif [[ $# == 2 && $2 == 'i' ]]; then
 		${CATKIN_COMPILE_COMMAND} install -DCATKIN_WHITELIST_PACKAGES=${pkglist#*;} ${CMAKE_ARGS}
+	elif [[ $# == 3 && $2 == 'i' ]]; then
+		${CATKIN_COMPILE_COMMAND} install -DCATKIN_WHITELIST_PACKAGES=${pkglist#*;} ${CMAKE_ARGS} $3
 	fi
 }
 
 cmidir(){
-	cmdir $1 'i'
+	if [ $# == 1 ]; then
+		cmdir $1 'i'
+	elif [ $# == 2 ]; then
+		cmdir $1 'i' $2
+	fi
 }
 
 cmdir2(){

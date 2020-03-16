@@ -14,76 +14,67 @@
 # 获取必应每日的主页图片作为壁纸
 #
 
-# 定义全局变量
-#
-# Bing 的网址
-BING_URL="https://bing.com"
-# 用于第一次粗略过滤时的关键字 (快速定位到图片链接所在行)
-FIRST_FILTERING_RULE='<link id="bgLink" rel="preload"'
-# 用于第二次精确过滤时的规则 (提取出未拼接的图片链接)
-SECOND_FILTERING_RULE='BEGIN { FS = "\"|\"" } { print $6 }'
+# 定义图片基本 URL
+SET_URL_BASE="https://bing.com"
+# 定义 API 地址
+SET_API="https://bing.com/HPImageArchive.aspx?format=js&idx=0&n=1"
+
+# The following setting is pretty significant, due to the cron uses /bin/sh as the script's interpreter, which doesn't
+# support sufficient environment variable, hence, we do some work to fix it
+PID=$(pgrep mate-session)
+export DBUS_SESSION_BUS_ADDRESS=$(grep -z DBUS_SESSION_BUS_ADDRESS /proc/$PID/environ|cut -d= -f2-)
 
 # 准备工作
-preparation_Action() {
-    # 判断存放壁纸的文件夹是否存在 (如果不存在就创建)
-    if [ -d "$HOME/.config/Wallpaper" ]; then
-        :
+Preparation_Action() {
+    # 判断存放壁纸的文件夹是否存在，如果不存在就创建
+    if [ -d "$HOME/.config/Wallpaper/Backups" ]; then
+        echo "hello"
     else
         mkdir -p "$HOME/.config/Wallpaper/Backups"
     fi
 }
 
 # 开始执行 preparation_Action 函数
-preparation_Action
+Preparation_Action
 
 # 提取文件名
-get_File_Name() {
+Set_Wallpaper() {
     # 获取传入的参数 1 (已拼接的图片链接)
-    FULL_URL="$1"
+    FILE_NAME="$1"
     # 获取传入的参数 2 (未拼接的图片链接)
-    HALF_URL="$2"
+    FILE_TYPE=".$2"
 
-    # 获取当前日期
-    TODAY=$(date +%Y%m%d)
-
-    # 提取图片的名字
-    FILE_NAME=$(echo -e "$HALF_URL" | cut -d "&" -f 1 | cut -d "_" -f 1 | cut -d "." -f 2)
-
-    # 提取出图片的后缀
-    TMP_FILE_TYPE=$(echo -e "$HALF_URL" | cut -d "&" -f 1 | cut -d "." -f 3)
-    FILE_TYPE=".$TMP_FILE_TYPE"
+    TODAY="$3"
 
     # 拼接图片最后的名字
     LAST_PIC_FILE_NAME=$TODAY"_"$FILE_NAME$FILE_TYPE
-    
-    # 下载主页图片到备份目录
-    curl -sL "$FULL_URL" -o "$HOME/.config/Wallpaper/Backups/$LAST_PIC_FILE_NAME"
 
     # 复制壁纸到壁纸的存放目录
     cp -rf "$HOME/.config/Wallpaper/Backups/$LAST_PIC_FILE_NAME" "$HOME/.config/Wallpaper/Current$FILE_TYPE"
     # 通过 feh 设置壁纸
     # 你也可以注释掉下面这行，转而使用其它壁纸设置工具，如果你想的话
     # feh --randomize --no-fehbg --bg-scale ~/.config/Wallpaper/Current$FILE_TYPE
-    gsettings set org.mate.background picture-filename "$(find ~/.config/Wallpaper -type f | shuf -n1)"
+    gsettings set org.mate.background picture-filename "$(find ~/.config/Wallpaper -maxdepth 1 -type f | shuf -n1)"
 }
 
 # 获取图片链接地址
-get_Pictures_URL() {
-    # 定义局部变量 (未拼接的图片链接)
-    INCOMPLETE_URL=$(
+Get_Pictures() {
+    # 获取图片具体 URL
+    GET_URL=$(curl -sL "$SET_API" | awk -F '"' '{ print $18 }')
+    # 获取图片名
+    GET_NAME=$(echo -e "$GET_URL" | cut -d "_" -f 1 | cut -d "." -f 2)
+    # 获取图片格式
+    GET_TYPE=$(echo -e "$GET_URL" | cut -d "&" -f 2 | cut -d "." -f 2)
 
-    # 获取 Bing 网站的源码
-    curl -sL "$BING_URL" |
-    
-    # 进行第一次粗略过滤时的关键字 (快速定位到图片链接所在行)
-    grep "$FIRST_FILTERING_RULE" |
-    
-    # 进行第二次精确过滤时的规则 (提取出图片链接)
-    awk "$SECOND_FILTERING_RULE" )
+    # 获取当前日期
+    TODAY=$(date +%Y%m%d)
 
-    # 开始执行 file_Name 函数并传入已拼接的 URL 和未拼接的 URL 两个参数
-    get_File_Name "$BING_URL$INCOMPLETE_URL" "$INCOMPLETE_URL"
+    # 下载图片
+    curl -L "$SET_URL_BASE$GET_URL" -o "$HOME/.config/Wallpaper/Backups/$TODAY"_"$GET_NAME.$GET_TYPE"
+
+    # 设置壁纸
+    Set_Wallpaper "$GET_NAME" "$GET_TYPE" "$TODAY"
 }
 
 # 开始执行 get_Pictures 函数
-get_Pictures_URL
+Get_Pictures

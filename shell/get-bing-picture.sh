@@ -8,7 +8,7 @@
 # @Note: Using crontab -e to set a timed task(This is a temporary method, it will lost after reboot, permanent method is
 #          edit /etc/crontab)
 # @Crontab usage description: https://blog.csdn.net/allenlinrui/article/details/7490206
-# @New version(Using api with js): https://github.com/Cool-Pan/dotfiles/blob/master/files/power-pkg/profile/_bing
+# @New version(Using api with js): https://github.com/Cool-Pan/wz-bing
 
 #
 # 获取必应每日的主页图片作为壁纸
@@ -18,6 +18,10 @@
 SET_URL_BASE="https://bing.com"
 # 定义 API 地址
 SET_API="https://bing.com/HPImageArchive.aspx?format=js&idx=0&n=1"
+
+# Define two different versions
+SET_API_EN="https://bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&ensearch=1"
+SET_API_CN="https://bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&ensearch=0"
 
 # The following setting is pretty significant, due to the cron uses /bin/sh as the script's interpreter, which doesn't
 # support sufficient environment variable, hence, we do some work to fix it
@@ -59,8 +63,16 @@ Set_Wallpaper() {
 
 # 获取图片链接地址
 Get_Pictures() {
-    # 获取图片具体 URL
-    GET_URL=$(curl -sL "$SET_API" | awk -F '"' '{ print $18 }')
+    # 获取图片具体 URL(default)
+    # GET_URL=$(curl -sL "$SET_API" | awk -F '"' '{ print $18 }')
+    
+    # set two timers with crontab
+    hour=$(date +%H)
+    if [ $hour -lt 13 ]; then
+        GET_URL=$(curl -sL "$SET_API_EN" | awk -F '"' '{ print $18 }')
+    else
+        GET_URL=$(curl -sL "$SET_API_CN" | awk -F '"' '{ print $18 }')
+    fi
     # 获取图片名
     GET_NAME=$(echo -e "$GET_URL" | cut -d "_" -f 1 | cut -d "." -f 2)
     # 获取图片格式

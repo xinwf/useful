@@ -172,8 +172,9 @@ alias scpbot='sshpass -ptic123 scp'
 alias scppc='sshpass -pmater scp'
 alias simenv='roslaunch navigation_stage move_base_amcl_5cm.launch'
 alias flushssh='ssh-keygen -f "${HOME}/.ssh/known_hosts" -R '$BOT_IP
-alias ziptic='rm tic_robot-latest.zip && zip -r tic_robot-latest.zip tic_robot -x *.git* || zip -r tic_robot-latest.zip tic_robot -x *.git*'
-alias ziptic2='rm tic_robot-dev_test.zip && zip -r tic_robot-dev_test.zip ticrobot_devtest -x *.git* || zip -r tic_robot-dev_test.zip ticrobot_devtest -x *.git*'
+alias ziptic='rm tic_robot-latest.zip -f && zip -r tic_robot-latest.zip tic_robot -x *.git* || zip -r tic_robot-latest.zip tic_robot -x *.git*'
+alias ziptic2='rm tic_robot-latest.zip -f && zip -r tic_robot-latest.zip tic_robot2 -x *.git* || zip -r tic_robot-latest.zip tic_robot2 -x *.git*'
+alias zipticdev='rm tic_robot-dev_test.zip -f && zip -r tic_robot-dev_test.zip ticrobot_devtest -x *.git* || zip -r tic_robot-dev_test.zip ticrobot_devtest -x *.git*'
 
 
 # delete files except specific files

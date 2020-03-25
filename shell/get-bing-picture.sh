@@ -64,15 +64,20 @@ Set_Wallpaper() {
 # 获取图片链接地址
 Get_Pictures() {
     # 获取图片具体 URL(default)
-    # GET_URL=$(curl -sL "$SET_API" | awk -F '"' '{ print $18 }')
+    GET_URL=$(curl -sL "$SET_API_CN" | awk -F '"' '{ print $18 }')
     
     # set two timers with crontab
-    hour=$(date +%H)
-    if [ $hour -lt 13 ]; then
-        GET_URL=$(curl -sL "$SET_API_EN" | awk -F '"' '{ print $18 }')
-    else
-        GET_URL=$(curl -sL "$SET_API_CN" | awk -F '"' '{ print $18 }')
-    fi
+    # hour=$(date +%H)
+    # minute=$(date +%M)
+    # if [ $hour -gt 13 ]; then
+    # if [ $minute -lt 12 ]; then
+        # echo "morning"
+        # GET_URL=$(curl -sL "$SET_API_EN" | awk -F '"' '{ print $18 }')
+    # else
+        # echo "afternoon"
+        # GET_URL=$(curl -sL "$SET_API_CN" | awk -F '"' '{ print $18 }')
+        # echo $GET_URL
+    # fi
     # 获取图片名
     GET_NAME=$(echo -e "$GET_URL" | cut -d "_" -f 1 | cut -d "." -f 2)
     # 获取图片格式

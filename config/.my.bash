@@ -32,6 +32,8 @@ alias grm='git rm'
 alias grs='git reset'
 alias gsh='git show'
 alias gtg='git tag'
+alias grb='git rebase'
+alias gsmur='git submodule update --remote'
 
 #ros and catkin_make relative
 # CMAKE_OPTION can't be used due to it's a system ENV variable.
@@ -172,9 +174,10 @@ alias scpbot='sshpass -ptic123 scp'
 alias scppc='sshpass -pmater scp'
 alias simenv='roslaunch navigation_stage move_base_amcl_5cm.launch'
 alias flushssh='ssh-keygen -f "${HOME}/.ssh/known_hosts" -R '$BOT_IP
-alias ziptic='rm tic_robot-latest.zip -f && zip -r tic_robot-latest.zip tic_robot -x *.git* || zip -r tic_robot-latest.zip tic_robot -x *.git*'
-alias ziptic2='rm tic_robot-latest.zip -f && zip -r tic_robot-latest.zip tic_robot2 -x *.git* || zip -r tic_robot-latest.zip tic_robot2 -x *.git*'
-alias zipticdev='rm tic_robot-dev_test.zip -f && zip -r tic_robot-dev_test.zip ticrobot_devtest -x *.git* || zip -r tic_robot-dev_test.zip ticrobot_devtest -x *.git*'
+alias ziptic='rm tic_robot-latest.zip -f && zip -r tic_robot-latest.zip tic_robot -x *.git* *.vscode* || zip -r tic_robot-latest.zip tic_robot -x *.git* *.vscode*'
+alias ziptic2='rm tic_robot-latest.zip -f && zip -r tic_robot-latest.zip tic_robot2 -x *.git* *.vscode* || zip -r tic_robot-latest.zip tic_robot2 -x *.git* *.vscode*'
+alias ziptic3='rm tic_robot-latest.zip -f && zip -r tic_robot-latest.zip tic_robot3 -x *.git* *.vscode* || zip -r tic_robot-latest.zip tic_robot3 -x *.git* *.vscode*'
+alias zipticdev='rm tic_robot-dev_test.zip -f && zip -r tic_robot-dev_test.zip ticrobot_devtest -x *.git* *.vscode* || zip -r tic_robot-dev_test.zip ticrobot_devtest -x *.git* *.vscode*'
 
 
 # delete files except specific files

@@ -5,24 +5,24 @@ using_ali_source()
     if [ ! -f "/etc/apt/sources.list.old" ]; then
          mv /etc/apt/sources.list /etc/apt/sources.list.old
          sh -c 'echo \
-"# deb cdrom:[Ubuntu 16.04 LTS _Xenial Xerus_ - Release amd64 (20160420.1)]/ xenial main restricted
-deb-src http://archive.ubuntu.com/ubuntu xenial main restricted #Added by software-properties
-deb http://mirrors.aliyun.com/ubuntu/ xenial main restricted
-deb-src http://mirrors.aliyun.com/ubuntu/ xenial main restricted multiverse universe #Added by software-properties
-deb http://mirrors.aliyun.com/ubuntu/ xenial-updates main restricted
-deb-src http://mirrors.aliyun.com/ubuntu/ xenial-updates main restricted multiverse universe #Added by software-properties
-deb http://mirrors.aliyun.com/ubuntu/ xenial universe
-deb http://mirrors.aliyun.com/ubuntu/ xenial-updates universe
-deb http://mirrors.aliyun.com/ubuntu/ xenial multiverse
-deb http://mirrors.aliyun.com/ubuntu/ xenial-updates multiverse
-deb http://mirrors.aliyun.com/ubuntu/ xenial-backports main restricted universe multiverse
-deb-src http://mirrors.aliyun.com/ubuntu/ xenial-backports main restricted universe multiverse #Added by software-properties
-deb http://archive.canonical.com/ubuntu xenial partner
-deb-src http://archive.canonical.com/ubuntu xenial partner
-deb http://mirrors.aliyun.com/ubuntu/ xenial-security main restricted
-deb-src http://mirrors.aliyun.com/ubuntu/ xenial-security main restricted multiverse universe #Added by software-properties
-deb http://mirrors.aliyun.com/ubuntu/ xenial-security universe
-deb http://mirrors.aliyun.com/ubuntu/ xenial-security multiverse" > /etc/apt/sources.list'
+"# deb cdrom:[Ubuntu 16.04 LTS _bionic Xerus_ - Release amd64 (20160420.1)]/ bionic main restricted
+deb-src http://archive.ubuntu.com/ubuntu bionic main restricted #Added by software-properties
+deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic main restricted multiverse universe #Added by software-properties
+deb http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted multiverse universe #Added by software-properties
+deb http://mirrors.aliyun.com/ubuntu/ bionic universe
+deb http://mirrors.aliyun.com/ubuntu/ bionic-updates universe
+deb http://mirrors.aliyun.com/ubuntu/ bionic multiverse
+deb http://mirrors.aliyun.com/ubuntu/ bionic-updates multiverse
+deb http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse #Added by software-properties
+deb http://archive.canonical.com/ubuntu bionic partner
+deb-src http://archive.canonical.com/ubuntu bionic partner
+deb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted multiverse universe #Added by software-properties
+deb http://mirrors.aliyun.com/ubuntu/ bionic-security universe
+deb http://mirrors.aliyun.com/ubuntu/ bionic-security multiverse" > /etc/apt/sources.list'
          apt update
     fi
 }

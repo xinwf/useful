@@ -3,8 +3,8 @@
 using_ali_source()
 {
     if [ ! -f "/etc/apt/sources.list.old" ]; then
-        sudo mv /etc/apt/sources.list /etc/apt/sources.list.old
-        sudo sh -c 'echo \
+         mv /etc/apt/sources.list /etc/apt/sources.list.old
+         sh -c 'echo \
 "# deb cdrom:[Ubuntu 16.04 LTS _Xenial Xerus_ - Release amd64 (20160420.1)]/ xenial main restricted
 deb-src http://archive.ubuntu.com/ubuntu xenial main restricted #Added by software-properties
 deb http://mirrors.aliyun.com/ubuntu/ xenial main restricted
@@ -23,7 +23,7 @@ deb http://mirrors.aliyun.com/ubuntu/ xenial-security main restricted
 deb-src http://mirrors.aliyun.com/ubuntu/ xenial-security main restricted multiverse universe #Added by software-properties
 deb http://mirrors.aliyun.com/ubuntu/ xenial-security universe
 deb http://mirrors.aliyun.com/ubuntu/ xenial-security multiverse" > /etc/apt/sources.list'
-        sudo apt update
+         apt update
     fi
 }
 
@@ -33,60 +33,61 @@ add_ros_source_and_base()
     using_ustc_source=$1
     if [ ! -f "/etc/apt/sources.list.d/ros-latest.list" ]; then
         if [ $using_ustc_source == true ]; then
-            sudo sh -c 'echo "deb http://mirrors.ustc.edu.cn/ros/ubuntu/ xenial main" > /etc/apt/sources.list.d/ros-latest.list'
-            wget https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -O - | sudo apt-key add -
-            # sudo apt-key adv --keyserver hkp://pool.sks-keyservers.net --recv-key 0xB01FA116
+             sh -c 'echo "deb http://mirrors.ustc.edu.cn/ros/ubuntu/ bionic main" > /etc/apt/sources.list.d/ros-latest.list'
+            wget https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -O - |  apt-key add -
+            #  apt-key adv --keyserver hkp://pool.sks-keyservers.net --recv-key 0xB01FA116
         else
-            sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu xenial main" > /etc/apt/sources.list.d/ros-latest.list'
-            sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
+             sh -c 'echo "deb http://packages.ros.org/ros/ubuntu bionic main" > /etc/apt/sources.list.d/ros-latest.list'
+             apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
         fi
-        sudo apt update
+         apt update
     else
         echo "Ros source has been added."
     fi
-    sudo apt update
-    sudo apt-get install ros-kinetic-ros-base -y
+     apt update
+     apt-get install ros-melodic-ros-base -y
 }
 
 install_basic_deps()
 {
-    sudo apt-get install -y python-rosnode python-catkin-tools rosbash rospack-tools ros-kinetic-xacro ros-kinetic-joint-state-publisher ros-kinetic-dynamic-robot-state-publisher
-    sudo apt-get install -y ros-kinetic-bfl # depends by robot_pose_ekf
-    sudo apt-get install -y ros-kinetic-map-msgs # depends by costmap_2d
-    sudo apt-get install -y ros-kinetic-costmap-prohibition-layer
-    sudo apt-get install -y ros-kinetic-costmap-converter ros-kinetic-mbf-costmap-core ros-kinetic-mbf-msgs ros-kinetic-libg2o ros-kinetic-tf-conversions # depend by teb_local_planner
-    sudo apt-get install -y ros-kinetic-rosbridge-suite 
-    sudo apt-get install -y ros-kinetic-rosconsole
-    sudo apt-get install -y ros-kinetic-serial
-    sudo apt-get install -y ros-kinetic-gmapping 
-    sudo apt-get install -y ros-kinetic-laser-filters
-    sudo apt-get install -y ros-kinetic-tf2-sensor-msgs
-    sudo apt-get install -y ros-kinetic-ecl-threads # depends by yocs_velocity_smoother
-    sudo apt-get install -y libbullet-dev libsdl1.2-dev libsdl-image1.2 libsdl-image1.2-dev # depends by map_server
+     apt-get install -y python-rosnode python-catkin-tools rosbash rospack-tools ros-melodic-xacro ros-melodic-joint-state-publisher ros-melodic-dynamic-robot-state-publisher
+     apt-get install -y ros-melodic-bfl # depends by robot_pose_ekf
+     apt-get install -y ros-melodic-map-msgs # depends by costmap_2d
+     apt-get install -y ros-melodic-pcl-conversions # depends by costmap_2d
+     apt-get install -y ros-melodic-costmap-prohibition-layer
+     apt-get install -y ros-melodic-costmap-converter ros-melodic-mbf-costmap-core ros-melodic-mbf-msgs ros-melodic-libg2o ros-melodic-tf-conversions # depend by teb_local_planner
+     apt-get install -y ros-melodic-rosbridge-suite 
+     apt-get install -y ros-melodic-rosconsole
+     apt-get install -y ros-melodic-serial
+     apt-get install -y ros-melodic-gmapping 
+     apt-get install -y ros-melodic-laser-filters
+     apt-get install -y ros-melodic-tf2-sensor-msgs
+     apt-get install -y ros-melodic-ecl-threads # depends by yocs_velocity_smoother
+     apt-get install -y libbullet-dev libsdl1.2-dev libsdl-image1.2 libsdl-image1.2-dev # depends by map_server
 }
 
 install_fuse_odom_deps()
 {
-    sudo apt-get install -y ros-kinetic-robot-localization
+     apt-get install -y ros-melodic-robot-localization
 }
 
 install_new_localization_deps()
 {
-    sudo apt-get install -y ros-kinetic-mrpt-localization
+     apt-get install -y ros-melodic-mrpt-localization
 }
 
 install_teaching_mode_deps()
 {
-    sudo apt-get install -y ros-kinetic-tf ros-kinetic-geometry-msgs ros-kinetic-dynamic-reconfigure ros-kinetic-nav-msgs ros-kinetic-pluginlib ros-kinetic-actionlib ros-kinetic-angles ros-kinetic-interactive-markers
+     apt-get install -y ros-melodic-tf ros-melodic-geometry-msgs ros-melodic-dynamic-reconfigure ros-melodic-nav-msgs ros-melodic-pluginlib ros-melodic-actionlib ros-melodic-angles ros-melodic-interactive-markers
 }
 
 install_path_gen_deps()
 {
     echo "Install room exploration deps ..."
-    sudo apt install -y ros-kinetic-cob-map-accessibility-analysis \
-    coinor-libcoinutils-dev ros-kinetic-libdlib ros-kinetic-move-base-msgs\
-    ros-kinetic-opengm coinor-libcbc-dev coinor-libcgl-dev \
-    coinor-libclp-dev coinor-libosi-dev coinor-libcoinutils-dev ros-kinetic-libconcorde-tsp-solver
+    apt install -y ros-melodic-cob-map-accessibility-analysis \
+    coinor-libcoinutils-dev ros-melodic-libdlib ros-melodic-move-base-msgs\
+    ros-melodic-opengm coinor-libcbc-dev coinor-libcgl-dev \
+    coinor-libclp-dev coinor-libosi-dev coinor-libcoinutils-dev #ros-melodic-libconcorde-tsp-solver
 }
 
 install_project_deps()
@@ -105,7 +106,7 @@ install_project_deps()
 set_ros_env(){
     echo "Set ros environment ..."
     file=${HOME}/.bashrc
-    checkStr="/opt/ros/kinetic/setup.bash"
+    checkStr="/opt/ros/melodic/setup.bash"
     key="source"
     added=false
     while read line
@@ -122,7 +123,7 @@ set_ros_env(){
     done < $file
 
     if ! $added; then
-        sh -c 'echo "source /opt/ros/kinetic/setup.bash" >> $HOME/.bashrc'
+        sh -c 'echo "source /opt/ros/melodic/setup.bash" >> $HOME/.bashrc'
         echo "Add source statement to bashrc"
     else
         echo "source statement has been added to .bashrc"
@@ -131,17 +132,17 @@ set_ros_env(){
 
 enable_ssh_server()
 {
-    sudo apt-get install -y openssh-server
-    sudo service sshd start
+     apt-get install -y openssh-server
+     service sshd start
 }
 
-using_ali_source
+#using_ali_source
 
-using_ustc_source=true
-add_ros_source_and_base $using_ustc_source
+#using_ustc_source=true
+#add_ros_source_and_base $using_ustc_source
 
 install_project_deps
 
-set_ros_env
-
-enable_ssh_server
+#set_ros_env
+#
+#enable_ssh_server

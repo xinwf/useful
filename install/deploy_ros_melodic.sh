@@ -48,22 +48,30 @@ add_ros_source_and_base()
      apt-get install ros-melodic-ros-base -y
 }
 
+install_general()
+{
+    apt remove -y vim-tiny
+    apt install -y vim git python-pip
+    pip install tornado pymongo
+}
+
 install_basic_deps()
 {
-     apt-get install -y python-rosnode python-catkin-tools rosbash rospack-tools ros-melodic-xacro ros-melodic-joint-state-publisher ros-melodic-dynamic-robot-state-publisher
-     apt-get install -y ros-melodic-bfl # depends by robot_pose_ekf
-     apt-get install -y ros-melodic-map-msgs # depends by costmap_2d
-     apt-get install -y ros-melodic-pcl-conversions # depends by costmap_2d
-     apt-get install -y ros-melodic-costmap-prohibition-layer
-     apt-get install -y ros-melodic-costmap-converter ros-melodic-mbf-costmap-core ros-melodic-mbf-msgs ros-melodic-libg2o ros-melodic-tf-conversions # depend by teb_local_planner
-     apt-get install -y ros-melodic-rosbridge-suite 
-     apt-get install -y ros-melodic-rosconsole
-     apt-get install -y ros-melodic-serial
-     apt-get install -y ros-melodic-gmapping 
-     apt-get install -y ros-melodic-laser-filters
-     apt-get install -y ros-melodic-tf2-sensor-msgs
-     apt-get install -y ros-melodic-ecl-threads # depends by yocs_velocity_smoother
-     apt-get install -y libbullet-dev libsdl1.2-dev libsdl-image1.2 libsdl-image1.2-dev # depends by map_server
+    apt-get install -y python-rosnode python-catkin-tools rosbash rospack-tools ros-melodic-xacro ros-melodic-joint-state-publisher ros-melodic-dynamic-robot-state-publisher
+    apt-get install -y ros-melodic-bfl # depends by robot_pose_ekf
+    apt-get install -y ros-melodic-map-msgs # depends by costmap_2d
+    apt-get install -y ros-melodic-pcl-conversions # depends by costmap_2d
+    apt-get install -y ros-melodic-costmap-prohibition-layer
+    apt-get install -y ros-melodic-costmap-converter ros-melodic-mbf-costmap-core ros-melodic-mbf-msgs ros-melodic-libg2o ros-melodic-tf-conversions # depend by teb_local_planner
+    apt-get install -y ros-melodic-rosbridge-suite 
+    apt-get install -y ros-melodic-rosconsole
+    apt-get install -y ros-melodic-serial
+    apt-get install -y ros-melodic-gmapping 
+    apt-get install -y ros-melodic-laser-filters
+    apt-get install -y ros-melodic-tf2-sensor-msgs
+    apt-get install -y ros-melodic-ecl-threads # depends by yocs_velocity_smoother
+    apt-get install -y libbullet-dev libsdl1.2-dev libsdl-image1.2 libsdl-image1.2-dev # depends by map_server
+    apt install -y ros-melodic-dynamic-robot-state-publisher ros-melodic-joint-state-publisher # depend by chassis
 }
 
 install_fuse_odom_deps()
@@ -140,6 +148,8 @@ enable_ssh_server()
 
 #using_ustc_source=true
 #add_ros_source_and_base $using_ustc_source
+
+install_general
 
 install_project_deps
 

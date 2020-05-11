@@ -34,8 +34,9 @@ add_ros_source_and_base()
     if [ ! -f "/etc/apt/sources.list.d/ros-latest.list" ]; then
         if [ $using_ustc_source == true ]; then
              sh -c 'echo "deb http://mirrors.ustc.edu.cn/ros/ubuntu/ bionic main" > /etc/apt/sources.list.d/ros-latest.list'
-            wget https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -O - |  apt-key add -
+            # wget https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -O - |  apt-key add -
             #  apt-key adv --keyserver hkp://pool.sks-keyservers.net --recv-key 0xB01FA116
+            apt-key adv --recv-keys --keyserver keyserver.ubuntu.com F42ED6FBAB17C654
         else
              sh -c 'echo "deb http://packages.ros.org/ros/ubuntu bionic main" > /etc/apt/sources.list.d/ros-latest.list'
              apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654

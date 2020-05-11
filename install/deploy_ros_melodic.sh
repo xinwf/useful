@@ -51,14 +51,14 @@ add_ros_source_and_base()
 
 install_general()
 {
-    apt remove -y vim-tiny
+    apt remove -y vim-tinyw
     apt install -y vim git python-pip
     pip install tornado pymongo
 }
 
 install_basic_deps()
 {
-    apt-get install -y python-rosnode python-catkin-tools rosbash rospack-tools ros-melodic-xacro ros-melodic-joint-state-publisher ros-melodic-dynamic-robot-state-publisher
+    apt-get install -y python-rosnode python-catkin-tools rosbash rospack-tools ros-melodic-xacro ros-melodic-joint-state-publisher ros-melodic-dynamic-robot-state-publisher  ros-melodic-sick-scan
     apt-get install -y ros-melodic-bfl # depends by robot_pose_ekf
     apt-get install -y ros-melodic-map-msgs # depends by costmap_2d
     apt-get install -y ros-melodic-pcl-conversions # depends by costmap_2d

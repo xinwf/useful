@@ -51,7 +51,7 @@ add_ros_source_and_base()
 
 install_general()
 {
-    apt remove -y vim-tinyw
+    apt remove -y vim-tiny
     apt install -y vim git python-pip
     pip install tornado pymongo
 }

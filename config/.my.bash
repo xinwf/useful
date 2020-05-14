@@ -51,6 +51,10 @@ alias cmii='catkin_make_isolated --install'
 alias cmi='catkin_make install'$CMAKE_ARGS
 alias cmopwd='catkin_make'$CMAKE_ARGS' --only-pkg-with-deps'
 alias cm='catkin_make'$CMAKE_ARGS
+alias ckb='catkin build'
+alias ckc='catkin clean'
+alias ckci='catkin config --install'
+alias ckbnd="catkin build "$@" --no-deps"
 
 # catkin_make with specific packages
 cmarg() {

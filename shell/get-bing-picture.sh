@@ -7,6 +7,7 @@
 # @E-Mail: xinwf18@gmail.com
 # @Note: Using crontab -e to set a timed task(This is a temporary method, it will lost after reboot, permanent method is
 #          edit /etc/crontab)
+#  example: 0 10 * * * /home/xwf/Public/xwf_github/useful/shell/get-bing-picture.sh
 # @Crontab usage description: https://blog.csdn.net/allenlinrui/article/details/7490206
 # @New version(Using api with js): https://github.com/Cool-Pan/wz-bing
 
@@ -24,9 +25,9 @@ SET_API_EN="https://bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&ensearch=1"
 SET_API_CN="https://bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&ensearch=0"
 
 # The following setting is pretty significant, due to the cron uses /bin/sh as the script's interpreter, which doesn't
-# support sufficient environment variable, hence, we do some work to fix it
-PID=$(pgrep mate-session)
-export DBUS_SESSION_BUS_ADDRESS=$(grep -z DBUS_SESSION_BUS_ADDRESS /proc/$PID/environ|cut -d= -f2-)
+# support sufficient environment variable, hence, we do some work to fix it(This was added for ubuntu mate)
+# PID=$(pgrep mate-session)
+# export DBUS_SESSION_BUS_ADDRESS=$(grep -z DBUS_SESSION_BUS_ADDRESS /proc/$PID/environ|cut -d= -f2-)
 
 # 准备工作
 Preparation_Action() {
@@ -58,7 +59,12 @@ Set_Wallpaper() {
     # 通过 feh 设置壁纸
     # 你也可以注释掉下面这行，转而使用其它壁纸设置工具，如果你想的话
     # feh --randomize --no-fehbg --bg-scale ~/.config/Wallpaper/Current$FILE_TYPE
-    gsettings set org.mate.background picture-filename "$(find ~/.config/Wallpaper -maxdepth 1 -type f | shuf -n1)"
+
+    # this is for ubuntu-mate
+    # gsettings set org.mate.background picture-filename "$(find ~/.config/Wallpaper -maxdepth 1 -type f | shuf -n1)"
+    
+    # this is for linux mint
+    gsettings set org.cinnamon.desktop.background picture-uri "file://$(find ~/.config/Wallpaper -maxdepth 1 -type f | shuf -n1)"
 }
 
 # 获取图片链接地址

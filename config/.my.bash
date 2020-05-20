@@ -38,7 +38,8 @@ alias gsmur='git submodule update --remote'
 #ros and catkin_make relative
 # CMAKE_OPTION can't be used due to it's a system ENV variable.
 CMAKE_ARGS=' --cmake-args -DCMAKE_CXX_FLAGS="-std=c++11"'
-CATKIN_COMPILE_COMMAND="catkin_make "
+CATKIN_MAKE_COMPILE_COMMAND="catkin_make "
+CATKIN_BUILD_COMPILE_COMMAND="catkin build "
 export ROS_HOSTNAME=localhost
 export ROS_MASTER_URI=http://localhost:11311/
 alias pub='rostopic pub -1'
@@ -52,7 +53,7 @@ alias cmi='catkin_make install'$CMAKE_ARGS
 alias cmopwd='catkin_make'$CMAKE_ARGS' --only-pkg-with-deps'
 alias cm='catkin_make'$CMAKE_ARGS
 alias ckb='catkin build'
-alias ckc='catkin clean'
+alias ckc='catkin clean bdil -y'
 alias ckci='catkin config --install'
 alias ckbnd="catkin build "$@" --no-deps"
 
@@ -66,10 +67,10 @@ cmarg() {
 	# echo $key
     #pkglist=$key';'$pkglist
 	if [ $key == 'i' ]; then
-		CATKIN_COMPILE_COMMAND=${CATKIN_COMPILE_COMMAND}' install'
+		CATKIN_MAKE_COMPILE_COMMAND=${CATKIN_MAKE_COMPILE_COMMAND}' install'
 		# POSTFIX='install '$POSTFIX
 	elif [ $key == 'opwd' ]; then
-		CATKIN_COMPILE_COMMAND=${CATKIN_COMPILE_COMMAND}' --only-pkg-with-deps'
+		CATKIN_MAKE_COMPILE_COMMAND=${CATKIN_MAKE_COMPILE_COMMAND}' --only-pkg-with-deps'
 		auto=true
 	else
     	pkglist=$pkglist';'$key
@@ -83,15 +84,15 @@ cmarg() {
  #  else
  #  	catkin_make $CMAKE_ARGS -DCATKIN_WHITELIST_PACKAGES=${pkglist#*;}
  #  fi
-#  echo ${CATKIN_COMPILE_COMMAND}' '-DCATKIN_WHITELIST_PACKAGES=${pkglist#*;}' $CMAKE_ARGS'
-# echo ${CATKIN_COMPILE_COMMAND}' '${pkglist#*;} $CMAKE_ARGS
-#   echo ${CATKIN_COMPILE_COMMAND}' '${pkglist#*;} $POSTFIX
+#  echo ${CATKIN_MAKE_COMPILE_COMMAND}' '-DCATKIN_WHITELIST_PACKAGES=${pkglist#*;}' $CMAKE_ARGS'
+# echo ${CATKIN_MAKE_COMPILE_COMMAND}' '${pkglist#*;} $CMAKE_ARGS
+#   echo ${CATKIN_MAKE_COMPILE_COMMAND}' '${pkglist#*;} $POSTFIX
   if $auto; then
-     ${CATKIN_COMPILE_COMMAND} ${pkglist#*;} ${CMAKE_ARGS}
+     ${CATKIN_MAKE_COMPILE_COMMAND} ${pkglist#*;} ${CMAKE_ARGS}
   else
-  	 ${CATKIN_COMPILE_COMMAND} -DCATKIN_WHITELIST_PACKAGES=${pkglist#*;} ${CMAKE_ARGS}
+  	 ${CATKIN_MAKE_COMPILE_COMMAND} -DCATKIN_WHITELIST_PACKAGES=${pkglist#*;} ${CMAKE_ARGS}
   fi
- # ${CATKIN_COMPILE_COMMAND} $CMAKE_ARGS -DCATKIN_WHITELIST_PACKAGES=${pkglist#*;}
+ # ${CATKIN_MAKE_COMPILE_COMMAND} $CMAKE_ARGS -DCATKIN_WHITELIST_PACKAGES=${pkglist#*;}
 }
 
 cmiarg() {
@@ -118,11 +119,11 @@ cmdir(){
 	done
 	# echo ${pkglist#*;}
 	if [ $# == 1 ]; then
-		${CATKIN_COMPILE_COMMAND} -DCATKIN_WHITELIST_PACKAGES=${pkglist#*;} ${CMAKE_ARGS}
+		${CATKIN_MAKE_COMPILE_COMMAND} -DCATKIN_WHITELIST_PACKAGES=${pkglist#*;} ${CMAKE_ARGS}
 	elif [[ $# == 2 && $2 == 'i' ]]; then
-		${CATKIN_COMPILE_COMMAND} install -DCATKIN_WHITELIST_PACKAGES=${pkglist#*;} ${CMAKE_ARGS}
+		${CATKIN_MAKE_COMPILE_COMMAND} install -DCATKIN_WHITELIST_PACKAGES=${pkglist#*;} ${CMAKE_ARGS}
 	elif [[ $# == 3 && $2 == 'i' ]]; then
-		${CATKIN_COMPILE_COMMAND} install -DCATKIN_WHITELIST_PACKAGES=${pkglist#*;} ${CMAKE_ARGS} $3
+		${CATKIN_MAKE_COMPILE_COMMAND} install -DCATKIN_WHITELIST_PACKAGES=${pkglist#*;} ${CMAKE_ARGS} $3
 	fi
 }
 
@@ -136,20 +137,40 @@ cmidir(){
 
 cmdir2(){
 	if [[ $# == 2 && $2 == 'i' ]]; then
-		CATKIN_COMPILE_COMMAND=${CATKIN_COMPILE_COMMAND}' install'
+		CATKIN_MAKE_COMPILE_COMMAND=${CATKIN_MAKE_COMPILE_COMMAND}' install'
 	fi
 
 	for dirName in $(ls $1)
 	do
 		# echo $dirName
 		if [[ -d $1'/'$dirName ]]; then
-			${CATKIN_COMPILE_COMMAND} -DCATKIN_WHITELIST_PACKAGES=$dirName ${CMAKE_ARGS}
+			${CATKIN_MAKE_COMPILE_COMMAND} -DCATKIN_WHITELIST_PACKAGES=$dirName ${CMAKE_ARGS}
 		fi
 	done
 }
 
 cmidir2(){
 	cmdir2 $1 'i'
+}
+
+#catkin build
+cbdir(){
+	pkglist=''
+	for dirName in $(ls $1)
+	do
+		# echo $dirName
+		if [[ -d $1'/'$dirName && ! -f $1'/'$dirName/CATKIN_IGNORE ]]; then
+			pkglist=$pkglist' '$dirName
+		fi
+	done
+	# echo ${pkglist#*;}
+	if [ $# == 1 ]; then
+		${CATKIN_BUILD_COMPILE_COMMAND} ${pkglist}
+	elif [[ $# == 2 && $2 == '--no-deps' ]]; then
+		${CATKIN_BUILD_COMPILE_COMMAND} ${pkglist} '--no-deps'
+	# elif [[ $# == 3 && $2 == 'i' ]]; then
+	# 	${CATKIN_MAKE_COMPILE_COMMAND} install -DCATKIN_WHITELIST_PACKAGES=${pkglist#*;} ${CMAKE_ARGS} $3
+	fi
 }
 
 #tmux relative

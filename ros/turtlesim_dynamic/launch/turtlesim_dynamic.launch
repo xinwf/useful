@@ -1,0 +1,18 @@
+<!--
+  Copyright: 2016-2018(c) ROS小课堂 www.corvin.cn
+  FileName: turtlesim_dynamic.launch
+  Author: corvin
+  Description:
+    加载turtlesim_dynamic_node启动的launch文件,启动时同时加载dynamic配置文件.
+  History:
+    20180503: init this file.
+-->
+<launch>
+  <!-- <node pkg="turtlesim_dynamic" type="turtlesim_dynamic_node" name="turtlesim_dynamic_node" output="screen">
+    <rosparam file="$(find turtlesim_dynamic)/cfg/dynamic.yaml" command="load" />
+  </node> -->
+
+  <node pkg="turtlesim" type="turtlesim_node" name="turtlesim_node" output="screen" />
+  <node pkg="turtlesim_dynamic" type="turtlesim_dynamic_node" name="turtlesim_dynamic_node" output="screen" />
+  <node pkg="rqt_reconfigure" type="rqt_reconfigure" name="rqt_reconfigure" output="screen" />
+</launch>

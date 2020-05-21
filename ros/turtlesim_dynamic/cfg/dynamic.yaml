@@ -1,0 +1,12 @@
+# Copyright: 2016-2018(c) ROS小课堂 www.corvin.cn
+# FileName: dynamic.yaml
+# Author: corvin
+# Description: 用于节点启动时加载的参数配置文件.
+# History:
+#   20180503: init this file.
+ 
+cmd_topic: turtle1/cmd_vel
+loop_rate: 1
+linear_x: 1.0
+angular_z: 1.0
+move_flag: ture

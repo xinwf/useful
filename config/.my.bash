@@ -14,6 +14,7 @@ alias lsd='ls -l |grep "^d"'
 alias wcf='ls -l |grep "^-" | wc -l'
 alias wcd='ls -l |grep "^d" | wc -l'
 alias toroot="echo 'mater' | (sudo -S su root) > /dev/null 2>&1 && sudo -i || sudo -i"
+alias setbg='gsettings set org.cinnamon.desktop.background picture-uri "file://$(find $HOME/.config/Wallpaper -maxdepth 1 -type f | shuf -n1)"'
 
 #git relative
 alias gcl='git clone'
@@ -34,12 +35,13 @@ alias gsh='git show'
 alias gtg='git tag'
 alias grb='git rebase'
 alias gsmur='git submodule update --remote'
+alias gsmu='git submodule update'
 
 #ros and catkin_make relative
 # CMAKE_OPTION can't be used due to it's a system ENV variable.
 CMAKE_ARGS=' --cmake-args -DCMAKE_CXX_FLAGS="-std=c++11"'
 CATKIN_MAKE_COMPILE_COMMAND="catkin_make "
-CATKIN_BUILD_COMPILE_COMMAND="catkin build "
+CATKIN_BUILD_COMPILE_COMMAND="catkin build -j5"
 export ROS_HOSTNAME=localhost
 export ROS_MASTER_URI=http://localhost:11311/
 alias pub='rostopic pub -1'
@@ -52,10 +54,10 @@ alias cmii='catkin_make_isolated --install'
 alias cmi='catkin_make install'$CMAKE_ARGS
 alias cmopwd='catkin_make'$CMAKE_ARGS' --only-pkg-with-deps'
 alias cm='catkin_make'$CMAKE_ARGS
-alias ckb='catkin build'
-alias ckc='catkin clean bdil -y'
+alias ckb='catkin build -j5'
+alias ckc='catkin clean -bdil -y'
 alias ckci='catkin config --install'
-alias ckbnd="catkin build "$@" --no-deps"
+alias ckbnd="catkin build -j5 "$@" --no-deps"
 
 # catkin_make with specific packages
 cmarg() {

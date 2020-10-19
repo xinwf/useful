@@ -61,6 +61,13 @@ void insertion(vector<int> vec)
     cout <<"\n";
 }
 
+void shell(vector<int> vec)
+{
+    for(int gap = vec.size()/2; gap > 0; gap = gap/2){
+        for(int i=0; i<gap; ++i)
+    }
+}
+
 int main()
 {
 

@@ -12,6 +12,7 @@ typedef struct _BiNode{
 class BiTree{
     PBiNode m_root;
     std::queue<PBiNode> m_biNode_que;
+    void clearQueue();
 public:
     BiTree();
     void createTree(const std::vector<int> & vec, int & count, PBiNode node);
@@ -20,16 +21,38 @@ public:
     void midOutput(PBiNode node);
     void aftOutput(PBiNode node);
     void layerOutput(PBiNode node);
+    ~BiTree();
 };
 
 BiTree::BiTree(){
     m_root = nullptr;
 }
 
+BiTree::~BiTree(){
+    if(m_root != nullptr){
+        clearQueue();
+        m_biNode_que.push(m_root);
+        while (m_biNode_que.size() !=0 )
+        {
+            PBiNode node = m_biNode_que.front();
+            if(node->left  != nullptr) m_biNode_que.push(node->left);
+            if(node->right != nullptr) m_biNode_que.push(node->right);
+            // std::cout << "Delete node " << node->data << "\n";
+            delete m_biNode_que.front();
+            m_biNode_que.pop();
+        }
+        
+    }
+}
+
+void BiTree::clearQueue(){
+    std::queue<PBiNode> empty_biNode_que;
+    std::swap(empty_biNode_que, m_biNode_que);
+}
+
 void BiTree::createTree(const std::vector<int> & vec, int & count, PBiNode node = nullptr){
     if((count > vec.size() - 1)){
-        std::queue<PBiNode> empty_biNode_que;
-        std::swap(empty_biNode_que, m_biNode_que);
+        clearQueue();
         std::cout << "Create finish.\n";
         return;
     }

@@ -15,6 +15,7 @@ alias wcf='ls -l |grep "^-" | wc -l'
 alias wcd='ls -l |grep "^d" | wc -l'
 alias toroot="echo 'mater' | (sudo -S su root) > /dev/null 2>&1 && sudo -i || sudo -i"
 alias setbg='gsettings set org.cinnamon.desktop.background picture-uri "file://$(find $HOME/.config/Wallpaper -maxdepth 1 -type f | shuf -n1)"'
+alias getbing='/home/xwf/Public/xwf_github/useful/shell/get-bing-picture.sh'
 
 #git relative
 alias gcl='git clone'

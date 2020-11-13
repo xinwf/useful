@@ -64,7 +64,7 @@ Set_Wallpaper() {
     # gsettings set org.mate.background picture-filename "$(find ~/.config/Wallpaper -maxdepth 1 -type f | shuf -n1)"
     
     # this is for linux mint
-    gsettings set org.cinnamon.desktop.background picture-uri "file://$(find ~/.config/Wallpaper -maxdepth 1 -type f | shuf -n1)"
+    gsettings set org.cinnamon.desktop.background picture-uri "file://$(find $HOME/.config/Wallpaper -maxdepth 1 -type f | shuf -n1)"
 }
 
 # 获取图片链接地址

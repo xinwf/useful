@@ -194,6 +194,8 @@ export BOT_USER='tic'
 export BOT=$BOT_USER@$BOT_IP
 export BOT99=$BOT_USER@'192.168.8.99'
 alias sshbot='sshpass -ptic123 ssh -o stricthostkeychecking=no '$BOT
+#alias sshbot='sshpass -ptoinchcom ssh -o stricthostkeychecking=no '$BOT
+alias sshtl='sshpass -ptonglu ssh -o stricthostkeychecking=no tonglu@'$BOT_IP
 alias sshbot99='sshpass -ptic123 ssh -o stricthostkeychecking=no '$BOT99
 alias sshser='sshpass -pgit ssh tic@192.168.8.234'
 alias sshbotr='sshpass -proot ssh root@$BOT_IP'

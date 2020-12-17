@@ -9,6 +9,7 @@ class SingletonTTS
 public:
     static T *Instance();
     static void Destroy();
+    static T *HasInstance();
 
 protected:
     SingletonTTS(){};
@@ -27,10 +28,16 @@ class Book //: public SingletonTTS<Book>
 {
 private:
     int m_i;
+    std::string data;
 public:
-    Book(int i):m_i(i){std::cout << "Book series " << i << "\n";}
-    ~Book(){std::cout << "Book series " << m_i << " destroied\n";}
+    Book(int i):m_i(i){
+        data = std::to_string(i) + " hello world!";
+        std::cout << "Book series " << i << " published.\n";
+    }
+    void Data() {std::cout << data << "  addr: " << &data << "\n"; }
+    ~Book(){std::cout << "Book series " << m_i << " is destroied.\n\n";}
 };
 
+#include "singleton_template_thread_safe.tpp"
 
 #endif

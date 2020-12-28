@@ -22,7 +22,7 @@ SET_API="https://bing.com/HPImageArchive.aspx?format=js&idx=0&n=1"
 
 # Define two different versions
 SET_API_EN="https://bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&ensearch=1"
-SET_API_CN="https://bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&ensearch=0"
+SET_API_CN="https://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&ensearch=0"
 
 # The following setting is pretty significant, due to the cron uses /bin/sh as the script's interpreter, which doesn't
 # support sufficient environment variable, hence, we do some work to fix it(This was added for ubuntu mate)

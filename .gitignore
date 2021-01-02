@@ -2,3 +2,4 @@
 *.vscode
 files/IBFS-master
 files/ibfs-patched
+*build*
